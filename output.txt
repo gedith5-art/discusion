@@ -1,17 +1,11 @@
-python examples/policy_baseline/03_collect_ioai_sim_scene.py \
-  --product pringles \
-  --dataset-path data/pringles_pick.hdf5 \
-  --episodes 5 \
-  --headless
-python examples/policy_baseline/03_collect_ioai_sim_scene.py \
-  --product orangejuice \
-  --dataset-path data/orangejuice_pick.hdf5 \
-  --episodes 10 \
-  --headless
+python examples/train.py \
+  --dataset data/pringles_pick.hdf5 \
+  --output outputs/ioai_sim_scene_pick/pringles
 
+python examples/train.py \
+  --dataset data/orangejuice_pick.hdf5 \
+  --output outputs/ioai_sim_scene_pick/orangejuice
 
-python examples/policy_baseline/03_collect_ioai_sim_scene.py \
-  --product cocoa \
-  --dataset-path data/cocoa_pick.hdf5 \
-  --episodes 10 \
-  --headless
+python examples/train.py \
+  --dataset data/cocoa_pick.hdf5 \
+  --output outputs/ioai_sim_scene_pick/cocoa
