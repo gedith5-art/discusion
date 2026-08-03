@@ -1,19 +1,12 @@
-root@rm2148bpgrhcli6:/workspace/ioailab# grep -R "GALBOT_G1_PICK_TO_SHELF_TASK_ID" -n src
-grep: src/ioailab/tasks/__pycache__/__init__.cpython-312.pyc: binary file matches
-grep: src/ioailab/tasks/pick_to_shelf/config/g1/__pycache__/env_cfg.cpython-312.pyc: binary file matches
-src/ioailab/tasks/pick_to_shelf/config/g1/env_cfg.py:6:from ioailab.tasks.pick_to_shelf import GALBOT_G1_PICK_TO_SHELF_TASK_ID
-src/ioailab/tasks/pick_to_shelf/config/g1/env_cfg.py:14:    task_id=GALBOT_G1_PICK_TO_SHELF_TASK_ID,
-grep: src/ioailab/tasks/pick_to_shelf/__pycache__/__init__.cpython-312.pyc: binary file matches
-src/ioailab/tasks/pick_to_shelf/__init__.py:12:GALBOT_G1_PICK_TO_SHELF_TASK_ID: Final = "GalbotG1-PickToShelf-v0"
-src/ioailab/tasks/pick_to_shelf/__init__.py:13:GALBOT_G1_PICK_TO_SHELF_TASK_IDS: Final = (
-src/ioailab/tasks/pick_to_shelf/__init__.py:14:    GALBOT_G1_PICK_TO_SHELF_TASK_ID,
-src/ioailab/tasks/pick_to_shelf/__init__.py:22:    task_id=GALBOT_G1_PICK_TO_SHELF_TASK_ID,
-src/ioailab/tasks/pick_to_shelf/__init__.py:39:    "GALBOT_G1_PICK_TO_SHELF_TASK_ID",
-src/ioailab/tasks/pick_to_shelf/__init__.py:40:    "GALBOT_G1_PICK_TO_SHELF_TASK_IDS",
-src/ioailab/tasks/__init__.py:113:    "GALBOT_G1_PICK_TO_SHELF_TASK_ID",
-src/ioailab/tasks/__init__.py:114:    "GALBOT_G1_PICK_TO_SHELF_TASK_IDS",
-root@rm2148bpgrhcli6:/workspace/ioailab# grep -R "cube_on_shelf" -n src
-grep: src/ioailab/tasks/pick_to_shelf_place/mdp/__pycache__/terminations.cpython-312.pyc: binary file matches
-src/ioailab/tasks/pick_to_shelf_place/mdp/terminations.py:99:    cube_on_shelf = make_shelf_place_success_term()
+root@rm2148bpgrhcli6:/workspace/ioailab# find src -iname "*competition*"
+root@rm2148bpgrhcli6:/workspace/ioailab# find src -iname "*sort_to_shelf*"
+src/ioailab/tasks/sort_to_shelf
+src/ioailab/tasks/sort_to_shelf_place
+src/ioailab/tasks/sort_to_shelf_pick
+src/ioailab/tasks/sort_to_shelf_nav
+root@rm2148bpgrhcli6:/workspace/ioailab# find src -iname "*ioai_sim_scene*"
+src/ioailab/tasks/ioai_sim_scene_place
+src/ioailab/tasks/ioai_sim_scene_pick
+src/ioailab/tasks/ioai_sim_scene
+src/ioailab/tasks/ioai_sim_scene_nav
 root@rm2148bpgrhcli6:/workspace/ioailab# 
-
