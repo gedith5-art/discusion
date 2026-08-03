@@ -1,12 +1,7 @@
-root@rm2148bpgrhcli6:/workspace/ioailab# find src -iname "*competition*"
-root@rm2148bpgrhcli6:/workspace/ioailab# find src -iname "*sort_to_shelf*"
-src/ioailab/tasks/sort_to_shelf
-src/ioailab/tasks/sort_to_shelf_place
-src/ioailab/tasks/sort_to_shelf_pick
-src/ioailab/tasks/sort_to_shelf_nav
-root@rm2148bpgrhcli6:/workspace/ioailab# find src -iname "*ioai_sim_scene*"
-src/ioailab/tasks/ioai_sim_scene_place
-src/ioailab/tasks/ioai_sim_scene_pick
-src/ioailab/tasks/ioai_sim_scene
-src/ioailab/tasks/ioai_sim_scene_nav
-root@rm2148bpgrhcli6:/workspace/ioailab# 
+sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/__init__.py
+sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/task.py
+sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/runtime_state.py
+sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py
+grep -R "final.usda" -n src
+grep -R "Tray01" -n src
+grep -R "Shelf5Tier02" -n src
