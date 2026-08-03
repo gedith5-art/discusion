@@ -1,2 +1,30 @@
-cat outputs/ioai_policy_baseline.yaml
+root@rm2148bpgrhcli6:/workspace/ioailab# cat outputs/ioai_policy_baseline.yaml
 cat outputs/ioai_table_layout.yaml
+schema: ioailabIoaiPolicyManifest-v0
+products:
+  gum:
+    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
+    place_checkpoint: ioai_sim_scene_place/gum/inference/model_inference.pth
+    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/gum.yaml
+  cocacola:
+    pick_checkpoint: ioai_sim_scene_pick/cocacola/inference/model_inference.pth
+    place_checkpoint: ioai_sim_scene_place/cocacola/inference/model_inference.pth
+    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/cocacola
+schema: ioailabIoaiTableLayout-v0
+slots:
+  A1:
+    product: gum
+    occupied: true
+  A2:
+    product: cocacola
+    occupied: true
+  B1:
+    product: pringles
+    occupied: true
+  cocoa:
+    product: cocoa
+    occupied: true
+  B2:
+    product: orangejuice
+    occupied: true
+root@rm2148bpgrhcli6:/workspace/ioailab# 
