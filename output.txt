@@ -5,3 +5,32 @@ python examples/policy_baseline/04_eval_ioai_policy_pipeline.py \
   --max-products 5 \
   --max-steps 15000 \
   --headless
+
+
+
+
+oot@rm2148bpgrhcli6:/workspace/ioailab# python - <<'PY'
+from ioailab.tasks.ioai_sim_scene.policy_pipeline import load_policy_manifest
+
+m = load_policy_manifest(
+    "outputs/ioai_policy_baseline.yaml",
+    required_products=[
+        "gum",
+        "cocacola",
+        "pringles",
+        "cocoa",
+        "orangejuice",
+    ],
+)
+
+print("MANIFEST OK")
+print(m)
+PY
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+  File "/workspace/ioailab/src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py", line 473, in load_policy_manifest
+    _record_binding(bindings, pick_checkpoint, product_id, "pick")
+  File "/workspace/ioailab/src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py", line 2169, in _record_binding
+    raise ValueError(
+ValueError: Checkpoint /workspace/ioailab/outputs/ioai_sim_scene_pick/gum/inference/model_inference.pth is bound to both ('gum', 'pick') and ('pringles', 'pick').
+There was an error running python
