@@ -1,16 +1,6 @@
-python examples/policy_baseline/04_eval_ioai_policy_pipeline.py \
-  --table-layout outputs/ioai_table_layout.yaml \
-  --policy-manifest outputs/ioai_policy_baseline.yaml \
-  --episodes 1 \
-  --max-products 5 \
-  --max-steps 15000 \
-  --headless
-
-
-
-
-oot@rm2148bpgrhcli6:/workspace/ioailab# python - <<'PY'
-from ioailab.tasks.ioai_sim_scene.policy_pipeline import load_policy_manifest
+ValueError: Checkpoint /workspace/ioailab/outputs/ioai_sim_scene_pick/gum/inference/model_inference.pth is bound to both ('gum', 'pick') and ('pringles', 'pick').
+There was an error running python
+root@rm2148bpgrhcli6:/workspace/ioailab# python - <<'PY'                                                                                                                        from ioailab.tasks.ioai_sim_scene.policy_pipeline import load_policy_manifest
 
 m = load_policy_manifest(
     "outputs/ioai_policy_baseline.yaml",
@@ -28,9 +18,8 @@ print(m)
 PY
 Traceback (most recent call last):
   File "<stdin>", line 3, in <module>
-  File "/workspace/ioailab/src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py", line 473, in load_policy_manifest
-    _record_binding(bindings, pick_checkpoint, product_id, "pick")
-  File "/workspace/ioailab/src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py", line 2169, in _record_binding
+  File "/workspace/ioailab/src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py", line 462, in load_policy_manifest
     raise ValueError(
-ValueError: Checkpoint /workspace/ioailab/outputs/ioai_sim_scene_pick/gum/inference/model_inference.pth is bound to both ('gum', 'pick') and ('pringles', 'pick').
+ValueError: Policy bundle for cocoa has unsupported keys: ['place_checkpoint', 'place_start_scenario'].
 There was an error running python
+root@rm2148bpgrhcli6:/workspace/ioailab# 
