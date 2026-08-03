@@ -1,21 +1,17 @@
-schema: ioailabIoaiPolicyManifest-v0
-products:
-  gum:
-    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
-    place_checkpoint: ioai_sim_scene_place/gum/inference/model_inference.pth
-    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/gum.yaml
-  cocacola:
-    pick_checkpoint: ioai_sim_scene_pick/cocacola/inference/model_inference.pth
-    place_checkpoint: ioai_sim_scene_place/cocacola/inference/model_inference.pth
-    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/cocacola
-  pringles:
-    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
-    place_checkpoint: ioai_sim_scene_place/pringles/inference/model_inference.pth
-    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/pringles.yaml
-  orangejuice:
-    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
-    place_checkpoint: ioai_sim_scene_place/orangejuice/inference/model_inference.pth
-    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/orangejuice.yaml
+python - <<'PY'
+from ioailab.tasks.ioai_sim_scene.policy_pipeline import load_policy_manifest
 
-  cocoa:
-    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
+m = load_policy_manifest(
+    "outputs/ioai_policy_baseline.yaml",
+    required_products=[
+        "gum",
+        "cocacola",
+        "pringles",
+        "cocoa",
+        "orangejuice",
+    ],
+)
+
+print("MANIFEST OK")
+print(m)
+PY
