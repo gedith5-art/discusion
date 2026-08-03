@@ -1,112 +1,251 @@
-root@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,250p' examples/07_compound_task.py
-"""Run a coherent compound task and optionally override phase agents."""
+root@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,250p' src/ioailabroot@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py
+"""Policy routing and compound-agent helpers for the IOAI baseline."""
 
 from __future__ import annotations
 
-import argparse
+from collections import OrderedDict
+from collections.abc import Callable, Mapping, Sequence
+from concurrent.futures import Future, ThreadPoolExecutor
+from dataclasses import dataclass
+from functools import lru_cache
+import json
+from pathlib import Path
+from typing import Any
 
-from ioailab.agents import TaskFlowAgent
-from ioailab.envs import make_env
-from ioailab.tasks.pick_to_shelf import GALBOT_G1_PICK_TO_SHELF_TASK_ID
-from ioailab.utils.log_utils import configure, get_logger
+import torch
+import yaml
+
+from ioailab.agents import (
+    BaseAgent,
+    PolicyAgent,
+    TrajectoryNavAgent,
+    agent_sequence,
+    agent_step,
+)
+from ioailab.agents.io import EnvIds
+from ioailab.robots.g1.spec import (
+    G1_LEFT_ARM_DOF_ORDER,
+    G1_LEFT_GRIPPER_DOF_ORDER,
+    G1_LEG_DOF_ORDER,
+    G1_RIGHT_ARM_DOF_ORDER,
+    G1_RIGHT_GRIPPER_DOF_ORDER,
+)
+from ioailab.robots.g1.profile import G1_PROFILE
+from ioailab.tasks.common.scenario import Scenario
+from ioailab.tasks.common.scenario_set import load_scenario_set
+from ioailab.tasks.ioai_sim_scene import (
+    GALBOT_G1_IOAI_SIM_SCENE_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID,
+)
+from ioailab.tasks.ioai_sim_scene.arm_selection import select_shared_manipulation_arm
+from ioailab.tasks.ioai_sim_scene.runtime_state import (
+    IOAI_SIM_SCENE_PLACE_PHYSICAL_JOINT_NAMES,
+    IOAI_SIM_SCENE_POLICY_ALIGNED_JOINT_NAMES,
+    activate_pipeline_product,
+    place_physical_joint_targets,
+    read_table_layout,
+    place_policy_joint_references,
+    set_place_policy_joint_reference,
+    set_place_navigation_goal,
+    set_place_physical_joint_targets,
+)
+from ioailab.tasks.ioai_sim_scene.scene import (
+    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID,
+    IOAI_SIM_SCENE_PRODUCT_SCENE_NAMES,
+)
+from ioailab.tasks.ioai_sim_scene.table_layout import (
+    IOAI_TABLE_LAYOUT_B1_PRODUCTS,
+    IOAI_TABLE_LAYOUT_B2_PRODUCTS,
+    IoaiTableLayout,
+)
+from ioailab.tasks.ioai_sim_scene_nav.agent import nav_agent, nav_sequence_agent
+from ioailab.tasks.ioai_sim_scene_pick.config.g1.postures import (
+    G1_IOAI_SIM_SCENE_ARM_CARRY_JOINT_POS_BY_ARM,
+    G1_IOAI_SIM_SCENE_LEFT_ARM_READY_JOINT_POS,
+    G1_IOAI_SIM_SCENE_LEG_INITIAL_JOINT_POS,
+    G1_IOAI_SIM_SCENE_PICK_BASE_ORIENTATION,
+    G1_IOAI_SIM_SCENE_PICK_BASE_POSITION,
+    G1_IOAI_SIM_SCENE_RIGHT_ARM_INITIAL_JOINT_POS,
+)
+from ioailab.tasks.ioai_sim_scene_pick.mdp.terminations import (
+    IOAI_SIM_SCENE_MAX_PRODUCT_GRIPPER_CENTER_DISTANCE_M,
+    IOAI_SIM_SCENE_PICK_CARRY_MAX_JOINT_ABS_ERROR,
+    IOAI_SIM_SCENE_PLACE_GRIPPER_OPEN_MAX_POSITION,
+)
+from ioailab.tasks.ioai_sim_scene_pick.runtime_state import (
+    selected_product_root_positions,
+)
+from ioailab.tasks.ioai_sim_scene_place.mdp.terminations import (
+    IOAI_SIM_SCENE_PLACE_UPRIGHT_MIN_DOT,
+    IOAI_SIM_SCENE_PLACE_XY_TOLERANCE,
+    IOAI_SIM_SCENE_PLACE_Z_TOLERANCE,
+)
+from ioailab.tasks.ioai_sim_scene_place.runtime_state import place_target_positions
+
+from ioailab.utils.log_utils import get_logger
 
 logger = get_logger(__name__)
 
-# Select one compound-agent preset for the tutorial.
-# COMPOUND_AGENT_PRESET = "task_default"
-# COMPOUND_AGENT_PRESET = "pick_to_shelf_experts"
-COMPOUND_AGENT_PRESET = "pick_to_shelf_policy"
+POLICY_MANIFEST_SCHEMA = "ioailabIoaiPolicyManifest-v0"
+B1_PRODUCT_IDS = IOAI_TABLE_LAYOUT_B1_PRODUCTS
+B2_PRODUCT_IDS = IOAI_TABLE_LAYOUT_B2_PRODUCTS
+MANIPULATION_ACTION_TERMS = (
+    "left_arm",
+    "left_gripper",
+    "right_arm",
+    "right_gripper",
+)
+RETURN_ACTION_TERMS = (
+    "legs",
+    "left_arm",
+    "left_gripper",
+    "right_arm",
+    "right_gripper",
+)
+IOAI_SIM_SCENE_GRASP_MATCH_JOINT_NAMES = (
+    *G1_LEFT_ARM_DOF_ORDER,
+    *G1_LEFT_GRIPPER_DOF_ORDER,
+    *G1_RIGHT_ARM_DOF_ORDER,
+    *G1_RIGHT_GRIPPER_DOF_ORDER,
+)
+
+IOAI_POLICY_RETURN_BASE_CONTROL_RADIUS = 0.003
+IOAI_POLICY_RETURN_BASE_SUCCESS_RADIUS = 0.008
+IOAI_POLICY_RETURN_BASE_MAX_LINEAR_SPEED = 0.02
+IOAI_POLICY_RETURN_BASE_MAX_ANGULAR_SPEED = 0.02
+IOAI_POLICY_RETURN_MAX_JOINT_ABS_ERROR = 0.05
+IOAI_POLICY_RETURN_SETTLE_MAX_JOINT_ABS_ERROR = 0.005
+IOAI_POLICY_RETURN_MAX_JOINT_SPEED = 0.05
+IOAI_POLICY_RETURN_SETTLE_MAX_JOINT_SPEED = 0.02
+IOAI_POLICY_RETURN_WAYPOINT_TOLERANCE = 0.05
+IOAI_POLICY_RETURN_YAW_CONTROL_TOLERANCE = 0.005
+IOAI_POLICY_RETURN_YAW_TOLERANCE = 0.01
+IOAI_POLICY_MANIPULATION_BASE_HOLD_RADIUS = 0.0005
+IOAI_POLICY_MANIPULATION_BASE_HOLD_YAW_TOLERANCE = 0.001
+IOAI_POLICY_MANIPULATION_BASE_HOLD_WAYPOINT_TOLERANCE = 0.01
+IOAI_POLICY_MANIPULATION_BASE_HOLD_POSITION_GAIN = 4.0
+IOAI_POLICY_MANIPULATION_BASE_HOLD_YAW_GAIN = 4.0
 
 
-def main(argv: list[str] | None = None) -> None:
-    configure()
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--task", default=GALBOT_G1_PICK_TO_SHELF_TASK_ID)
-    parser.add_argument(
-        "--mode",
-        choices=("evaluate", "collect"),
-        default="evaluate",
-        help="Run evaluation metrics or collect an expert dataset.",
-    )
-    parser.add_argument(
-        "--dataset-path",
-        default="data/compound_task_demos.hdf5",
-        help="Output HDF5 path used with --mode collect.",
-    )
-    parser.add_argument(
-        "--episodes",
-        type=int,
-        default=36,
-        help="Total episodes across all env rows.",
-    )
-    parser.add_argument("--num-envs", type=int, default=9)
-    parser.add_argument("--max-steps", type=int, default=1500)
-    parser.add_argument(
-        "--sorting-object",
-        default=None,
-        help="SortToShelf object name, for example red_cube.",
-    )
-    parser.add_argument("--headless", action="store_true")
-    args = parser.parse_args(argv)
+IOAI_PIPELINE_PHASES = ("pick", "nav", "place")
+IOAI_PIPELINE_PHASE_SCORE = 5
+IOAI_PIPELINE_COMPLETION_BONUS = 5
 
-    task_options = (
-        {"sorting_object": args.sorting_object} if args.sorting_object else {}
-    )
-    env = make_env(
-        args.task,
-        num_envs=args.num_envs,
-        headless=args.headless,
-        **({"task_options": task_options} if task_options else {}),
-    )
-    try:
-        if COMPOUND_AGENT_PRESET == "task_default":
-            agent = TaskFlowAgent.from_env(env)
-        elif COMPOUND_AGENT_PRESET == "pick_to_shelf_experts":
-            from ioailab.agents import CuroboPlannerAgent, TrajectoryNavAgent
 
-            phase_agents = {
-                "pick": CuroboPlannerAgent.from_task("GalbotG1-PickToShelf-Pick-v0"),
-                "nav": TrajectoryNavAgent.from_task("GalbotG1-PickToShelf-Nav-v0"),
-                "place": CuroboPlannerAgent.from_task("GalbotG1-PickToShelf-Place-v0"),
-            }
-            agent = TaskFlowAgent.from_env(env, agents=phase_agents)
-        elif COMPOUND_AGENT_PRESET == "pick_to_shelf_policy":
-            from ioailab.agents import G1ManipulationPolicyActionAdapter, PolicyAgent
+@dataclass(frozen=True, slots=True)
+class IoaiPipelineLimits:
+    """Bound one product attempt without terminating the whole work order."""
 
-            phase_agents = {
-                "pick": G1ManipulationPolicyActionAdapter(
-                    PolicyAgent.from_checkpoint("outputs/pick/model_best_training.pth")
-                ),
-                "place": G1ManipulationPolicyActionAdapter(
-                    PolicyAgent.from_checkpoint("outputs/place/model_best_training.pth")
-                ),
-            }
-            agent = TaskFlowAgent.from_env(env, agents=phase_agents)
-        else:
-            raise ValueError(
-                f"Unknown COMPOUND_AGENT_PRESET: {COMPOUND_AGENT_PRESET!r}"
+    pick_max_steps: int = 1200
+    nav_max_steps: int = 1200
+    place_max_steps: int = 1200
+    drop_confirm_steps: int = 20
+    delivery_stable_steps: int = 10
+
+    def __post_init__(self) -> None:
+        values = {
+            "pick_max_steps": self.pick_max_steps,
+            "nav_max_steps": self.nav_max_steps,
+            "place_max_steps": self.place_max_steps,
+            "drop_confirm_steps": self.drop_confirm_steps,
+            "delivery_stable_steps": self.delivery_stable_steps,
+        }
+        invalid = tuple(name for name, value in values.items() if int(value) < 1)
+        if invalid:
+            raise ValueError(f"IOAI pipeline limits must be positive: {invalid}.")
+
+    def max_steps(self, phase: str) -> int:
+        """Return the configured budget for one canonical phase."""
+
+        phase_name = str(phase)
+        if phase_name not in IOAI_PIPELINE_PHASES:
+            raise ValueError(f"Unknown IOAI pipeline phase {phase_name!r}.")
+        return int(getattr(self, f"{phase_name}_max_steps"))
+
+
+class _IoaiProductScore:
+    """Mutable per-product score state owned by one episode scorecard."""
+
+    def __init__(self, product_id: str) -> None:
+        self.product_id = str(product_id)
+        self.phase_status = {phase: "pending" for phase in IOAI_PIPELINE_PHASES}
+        self.failure: dict[str, str] | None = None
+
+    def mark_success(self, phase: str) -> None:
+        phase_name = _validate_pipeline_phase(phase)
+        if self.phase_status[phase_name] in {"failed", "skipped"}:
+            raise RuntimeError(
+                f"Cannot mark {self.product_id}/{phase_name} successful after failure."
             )
+        self.phase_status[phase_name] = "success"
 
-        if args.mode == "collect":
-            dataset = env.collect(
-                agent=agent,
-                path=args.dataset_path,
-                episodes=args.episodes,
-                max_steps=args.max_steps,
-                metadata={"collection": "compound_task", "task": args.task},
-            )
-            logger.info("Saved %d demo(s) to %s", args.episodes, dataset.path)
-        else:
-            metrics = env.evaluate(
-                agent=agent,
-                episodes=args.episodes,
-                max_steps=args.max_steps,
-            )
-            logger.info("Evaluated %d episode(s)", metrics["total_episodes"])
-            logger.info("Success rate: %.1f%%", metrics["success_rate"] * 100)
-    finally:
-        env.close()
+    def mark_failure(self, phase: str, reason: str) -> None:
+        phase_name = _validate_pipeline_phase(phase)
+        if self.failure is not None:
+            return
+        self.phase_status[phase_name] = "failed"
+        phase_index = IOAI_PIPELINE_PHASES.index(phase_name)
+        for skipped_phase in IOAI_PIPELINE_PHASES[phase_index + 1 :]:
+            if self.phase_status[skipped_phase] == "pending":
+                self.phase_status[skipped_phase] = "skipped"
+        self.failure = {"phase": phase_name, "reason": str(reason)}
+
+    def mark_complete(self) -> None:
+        for phase in IOAI_PIPELINE_PHASES:
+            self.mark_success(phase)
+
+    @property
+    def complete(self) -> bool:
+        return all(
+            self.phase_status[phase] == "success" for phase in IOAI_PIPELINE_PHASES
+        )
+
+    @property
+    def total(self) -> int:
+        phase_points = sum(
+            IOAI_PIPELINE_PHASE_SCORE
+            for phase in IOAI_PIPELINE_PHASES
+            if self.phase_status[phase] == "success"
+        )
+        return phase_points + (IOAI_PIPELINE_COMPLETION_BONUS if self.complete else 0)
+
+    def matrix_row(self) -> dict[str, Any]:
+        status = "success" if self.complete else "failed" if self.failure else "pending"
+        return {
+            "product": self.product_id,
+            **{
+                phase: (
+                    IOAI_PIPELINE_PHASE_SCORE
+                    if self.phase_status[phase] == "success"
+                    else 0
+                )
+                for phase in IOAI_PIPELINE_PHASES
+            },
+            "bonus": IOAI_PIPELINE_COMPLETION_BONUS if self.complete else 0,
+            "total": self.total,
+            "status": status,
+            "failure": None if self.failure is None else dict(self.failure),
+        }
 
 
-if __name__ == "__main__":
-    main()
+class IoaiPipelineScorecard:
+    """Five-point phase matrix and completion bonus for one pipeline episode."""
+
+    def __init__(self, work_order: Sequence[str]) -> None:
+        products = tuple(str(product_id) for product_id in work_order)
+        if not products or len(set(products)) != len(products):
+            raise ValueError("IOAI scorecard requires a non-empty unique work order.")
+        self.work_order = products
+        self._results: dict[str, _IoaiProductScore] = {}
+        self.reset()
+
+    def reset(self) -> None:
+        """Clear results for a new environment reset."""
+
+        self._results = {
+            product_id: _IoaiProductScore(product_id) for product_id in self.work_order
+        }
+
+    def mark_phase_success(self, product_id: str, phase: str) -> None:
+        self._result(product_id).mark_success(phase)
