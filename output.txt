@@ -1,113 +1,112 @@
-root@rm2148bpgrhcli6:/workspace/ioailab# python examples/07_compound_task.py
-Loading user config located at: '/isaac-sim/kit/data/Kit/IsaacLab/3.0/user.config.json'
-2026-08-03T12:19:40Z [Info] [carb] Logging to file: /isaac-sim/kit/logs/Kit/IsaacLab/3.0/kit_20260803_121940.log
-2026-08-03T12:19:40Z [5ms] [Warning] [omni.ext.plugin] [ext: isaaclab_visualizers] Extensions config 'extension.toml' doesn't exist '/workspace/isaaclab/source/isaaclab_visualizers' or '/workspace/isaaclab/source/isaaclab_visualizers/config'
-2026-08-03T12:19:40Z [442ms] [Warning] [carb.omniclient.plugin]  1437: OmniHub: ThreadId(02) Hub encountered error. Trying to reconnect to Hub. retry_reason="Hub failed to launch: Io(\"child exited with exit status: 1 without writing file \\\"/tmp/hub-root-5B4F6F1.config.json\\\"\")"
-m_link2/normalTex::::Z73file_3A::workspace::ioailab::assets::galbot_one_golf_description::usd::Textures::pbr::gltf_normal_texture_lookup(texture_2d,float,int,int,float2,f[...])((101))' not available in the MDL representation.
-[INFO]: Time taken for simulation start Last: 3.660087 s, Mean: 3.660087 s, Std: 0.000000 s, N: 1
-[INFO] Command Manager:  <CommandManager> contains 0 active terms.
-+------------------------+
-|  Active Command Terms  |
-+--------+-------+-------+
-| Index  | Name  |  Type |
-+--------+-------+-------+
-+--------+-------+-------+
+root@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,250p' examples/07_compound_task.py
+"""Run a coherent compound task and optionally override phase agents."""
 
-[INFO] Event Manager:  <EventManager> contains 1 active terms.
-+-------------------------------------+
-| Active Event Terms in Mode: 'reset' |
-+----------+--------------------------+
-|  Index   | Name                     |
-+----------+--------------------------+
-|    0     | reset_all                |
-|    1     | reset_task_phase         |
-+----------+--------------------------+
+from __future__ import annotations
 
-[INFO] Recorder Manager:  <RecorderManager> contains 5 active terms.
-+--------------------------------------------------+
-|              Active Recorder Terms               |
-+-------+------------------------------------------+
-| Index | Name                                     |
-+-------+------------------------------------------+
-|   0   | record_initial_state                     |
-|   1   | record_post_step_states                  |
-|   2   | record_pre_step_actions                  |
-|   3   | record_pre_step_flat_policy_observations |
-|   4   | record_post_step_processed_actions       |
-+-------+------------------------------------------+
+import argparse
 
-[INFO]: Resolved joint names for the action term JointPositionAction: ['left_arm_joint1', 'left_arm_joint2', 'left_arm_joint3', 'left_arm_joint4', 'left_arm_joint5', 'left_arm_joint6', 'left_arm_joint7'] [[50, 53, 55, 57, 59, 61, 63]]
-[INFO]: Resolved joint names for the action term JointPositionAction: ['left_gripper_joint'] [[65]]
-[INFO]: Resolved joint names for the action term JointVelocityAction: ['wheel1_joint', 'wheel2_joint', 'wheel3_joint', 'wheel4_joint'] [[1, 2, 3, 4]]
-[INFO] Action Manager:  <ActionManager> contains 3 active terms.
-+------------------------------------+
-|  Active Action Terms (shape: 12)   |
-+-------+----------------+-----------+
-| Index | Name           | Dimension |
-+-------+----------------+-----------+
-|   0   | arm_action     |         7 |
-|   1   | gripper_action |         1 |
-|   2   | base_action    |         4 |
-+-------+----------------+-----------+
+from ioailab.agents import TaskFlowAgent
+from ioailab.envs import make_env
+from ioailab.tasks.pick_to_shelf import GALBOT_G1_PICK_TO_SHELF_TASK_ID
+from ioailab.utils.log_utils import configure, get_logger
 
-2026-08-03T12:20:06Z [26,447ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
-2026-08-03T12:20:06Z [26,462ms] [Warning] [omni.rtx.materials] Parameter 'sourceColorSpace' of shade node 'usd::rtx_scope0::/__Prototype_16249313336898678717/VisualMaterials/M_chassis/normalTex::::Z73file_3A::workspace::ioailab::assets::galbot_one_golf_description::usd::Textures::pbr::gltf_normal_texture_lookup(texture_2d,float,int,int,float2,f[...])((20))' not available in the MDL representation.
-2026-08-03T12:20:06Z [26,463ms] [Warning] [omni.rtx.materials] Parameter 'sourceColorSpace' of shade node 'usd::rtx_scope0::/__Prototype_8326866459082371617/VisualMaterials/M_mid360_tube/normalTex::::Z73file_3A::workspace::ioailab::assets::galbot_one_golf_description::usd::Textures::pbr::gltf_normal_texture_lookup(texture_2d,float,int,int,float2,f[...])((29))' not available in the MDL representation.
-2026-08-03T12:20:06Z [26,465ms] [Warning] [omni.rtx.materials] Parameter 'sourceColorSpace' of shade node 'usd::rtx_scope0::/__Prototype_112460365231964374/VisualMaterials/M_torso/normalTex::::Z73file_3A::workspace::ioailab::assets::galbot_one_golf_description::usd::Textures::pbr::gltf_normal_texture_lookup(texture_2d,float,int,int,float2,f[...])((53))' not available in the MDL representation.
-2026-08-03T12:20:06Z [26,465ms] [Warning] [omni.rtx.materials] Parameter 'sourceColorSpace' of shade node 'usd::rtx_scope0::/__Prototype_4777003054884685956/VisualMaterials/M_subwheel/normalTex::::Z73file_3A::workspace::ioailab::assets::galbot_one_golf_description::usd::Textures::pbr::gltf_normal_texture_lookup(texture_2d,float,int,int,float2,f[...])((62))' not available in the MDL representation.
-2026-08-03T12:20:06Z [26,466ms] [Warning] [omni.rtx.materials] Parameter 'sourceColorSpace' of shade node 'usd::rtx_scope0::/__Prototype_16587733453003200785/VisualMaterials/M_sensors_realsense_d405/normalTex::::Z73file_3A::workspace::ioailab::assets::galbot_one_golf_description::usd::Textures::pbr::gltf_normal_texture_lookup(texture_2d,float,int,int,float2,f[...])((65))' not available in the MDL representation.
-2026-08-03T12:20:06Z [26,469ms] [Warning] [omni.rtx.materials] Parameter 'sourceColorSpace' of shade node 'usd::rtx_scope0::/__Prototype_4886523141583585701/VisualMaterials/M_arm_link2/normalTex::::Z73file_3A::workspace::ioailab::assets::galbot_one_golf_description::usd::Textures::pbr::gltf_normal_texture_lookup(texture_2d,float,int,int,float2,f[...])((101))' not available in the MDL representation.
-[INFO]: RTX streaming completed in 0.07 s.
-[INFO] Observation Manager: <ObservationManager> contains 1 groups.
-+-----------------------------------------------+
-|  Active Observation Terms in Group: 'policy'  |
-+--------+--------------------+-----------------+
-| Index  | Name               |      Shape      |
-+--------+--------------------+-----------------+
-|   0    | actions            |      (12,)      |
-|   1    | front_head_rgb     |  (224, 298, 3)  |
-|   2    | robot_joint_pos    |      (77,)      |
-|   3    | base_xy            |       (2,)      |
-|   4    | goal_xy            |       (2,)      |
-|   5    | vector_to_goal     |       (2,)      |
-+--------+--------------------+-----------------+
+logger = get_logger(__name__)
 
-[INFO] Termination Manager:  <TerminationManager> contains 2 active terms.
-+----------------------------------+
-|     Active Termination Terms     |
-+-------+---------------+----------+
-| Index | Name          | Time Out |
-+-------+---------------+----------+
-|   0   | time_out      |   True   |
-|   1   | cube_on_shelf |  False   |
-+-------+---------------+----------+
+# Select one compound-agent preset for the tutorial.
+# COMPOUND_AGENT_PRESET = "task_default"
+# COMPOUND_AGENT_PRESET = "pick_to_shelf_experts"
+COMPOUND_AGENT_PRESET = "pick_to_shelf_policy"
 
-[INFO] Reward Manager:  <RewardManager> contains 0 active terms.
-+-----------------------+
-|  Active Reward Terms  |
-+-------+------+--------+
-| Index | Name | Weight |
-+-------+------+--------+
-+-------+------+--------+
 
-[INFO] Curriculum Manager:  <CurriculumManager> contains 0 active terms.
-+----------------------+
-| Active Curriculum Terms |
-+-----------+----------+
-|   Index   | Name     |
-+-----------+----------+
-+-----------+----------+
+def main(argv: list[str] | None = None) -> None:
+    configure()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--task", default=GALBOT_G1_PICK_TO_SHELF_TASK_ID)
+    parser.add_argument(
+        "--mode",
+        choices=("evaluate", "collect"),
+        default="evaluate",
+        help="Run evaluation metrics or collect an expert dataset.",
+    )
+    parser.add_argument(
+        "--dataset-path",
+        default="data/compound_task_demos.hdf5",
+        help="Output HDF5 path used with --mode collect.",
+    )
+    parser.add_argument(
+        "--episodes",
+        type=int,
+        default=36,
+        help="Total episodes across all env rows.",
+    )
+    parser.add_argument("--num-envs", type=int, default=9)
+    parser.add_argument("--max-steps", type=int, default=1500)
+    parser.add_argument(
+        "--sorting-object",
+        default=None,
+        help="SortToShelf object name, for example red_cube.",
+    )
+    parser.add_argument("--headless", action="store_true")
+    args = parser.parse_args(argv)
 
-[INFO]: Completed setting up the environment...
-../../../source/sharedlibs/cubric/lib/cubric_device.cpp(47)[device_check_compliance]: [cubric] Unsupported device ordinal 0 required to provide managed memory.
-2026-08-03T12:20:07Z [26,835ms] [Warning] [omni.physx.fabric.plugin] Failed to update transform hierarchy on the GPU, falling back to CPU
-2026-08-03T12:20:07Z [27,531ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
-[INFO]: SimulationContext cleared
-root@rm2148bpgrhcli6:/workspace/ioailab# python /src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py
-/workspace/isaaclab/_isaac_sim/kit/python/bin/python3: can't open file '/src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py': [Errno 2] No such file or directory
-There was an error running python
-root@rm2148bpgrhcli6:/workspace/ioailab# python src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py
-root@rm2148bpgrhcli6:/workspace/ioailab# python src/ioailab/tasks/ioai_sim_scene/runtime_state.py
-root@rm2148bpgrhcli6:/workspace/ioailab# python examples/07_compound_task.py
-Loading user config located at: '/isaac-sim/kit/data/Kit/IsaacLab/3.0/user.config.json'
-2026-08-03T12:23:21Z [Info] [carb] Logging to file: /isaac-sim/kit/logs/Kit/IsaacLab/3.0/kit_20260803_122321.log
+    task_options = (
+        {"sorting_object": args.sorting_object} if args.sorting_object else {}
+    )
+    env = make_env(
+        args.task,
+        num_envs=args.num_envs,
+        headless=args.headless,
+        **({"task_options": task_options} if task_options else {}),
+    )
+    try:
+        if COMPOUND_AGENT_PRESET == "task_default":
+            agent = TaskFlowAgent.from_env(env)
+        elif COMPOUND_AGENT_PRESET == "pick_to_shelf_experts":
+            from ioailab.agents import CuroboPlannerAgent, TrajectoryNavAgent
+
+            phase_agents = {
+                "pick": CuroboPlannerAgent.from_task("GalbotG1-PickToShelf-Pick-v0"),
+                "nav": TrajectoryNavAgent.from_task("GalbotG1-PickToShelf-Nav-v0"),
+                "place": CuroboPlannerAgent.from_task("GalbotG1-PickToShelf-Place-v0"),
+            }
+            agent = TaskFlowAgent.from_env(env, agents=phase_agents)
+        elif COMPOUND_AGENT_PRESET == "pick_to_shelf_policy":
+            from ioailab.agents import G1ManipulationPolicyActionAdapter, PolicyAgent
+
+            phase_agents = {
+                "pick": G1ManipulationPolicyActionAdapter(
+                    PolicyAgent.from_checkpoint("outputs/pick/model_best_training.pth")
+                ),
+                "place": G1ManipulationPolicyActionAdapter(
+                    PolicyAgent.from_checkpoint("outputs/place/model_best_training.pth")
+                ),
+            }
+            agent = TaskFlowAgent.from_env(env, agents=phase_agents)
+        else:
+            raise ValueError(
+                f"Unknown COMPOUND_AGENT_PRESET: {COMPOUND_AGENT_PRESET!r}"
+            )
+
+        if args.mode == "collect":
+            dataset = env.collect(
+                agent=agent,
+                path=args.dataset_path,
+                episodes=args.episodes,
+                max_steps=args.max_steps,
+                metadata={"collection": "compound_task", "task": args.task},
+            )
+            logger.info("Saved %d demo(s) to %s", args.episodes, dataset.path)
+        else:
+            metrics = env.evaluate(
+                agent=agent,
+                episodes=args.episodes,
+                max_steps=args.max_steps,
+            )
+            logger.info("Evaluated %d episode(s)", metrics["total_episodes"])
+            logger.info("Success rate: %.1f%%", metrics["success_rate"] * 100)
+    finally:
+        env.close()
+
+
+if __name__ == "__main__":
+    main()
