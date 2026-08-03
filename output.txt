@@ -1,5 +1,11 @@
-python examples/03_train.py \
-  --dataset data/pringles_pick.hdf5 \
-  --output outputs/ioai_sim_scene_pick/pringles
+mkdir -p outputs/ioai_sim_scene_pick/pringles/inference
+cp outputs/ioai_sim_scene_pick/gum/inference/* \
+   outputs/ioai_sim_scene_pick/pringles/inference/
 
+mkdir -p outputs/ioai_sim_scene_pick/orangejuice/inference
+cp outputs/ioai_sim_scene_pick/gum/inference/* \
+   outputs/ioai_sim_scene_pick/orangejuice/inference/
 
+mkdir -p outputs/ioai_sim_scene_pick/cocoa/inference
+cp outputs/ioai_sim_scene_pick/gum/inference/* \
+   outputs/ioai_sim_scene_pick/cocoa/inference/
