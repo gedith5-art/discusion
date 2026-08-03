@@ -1,3 +1,27 @@
-find outputs/ioai_sim_scene_pick -maxdepth 2 -type d
+root@rm2148bpgrhcli6:/workspace/ioailab# find outputs/ioai_sim_scene_pick -maxdepth 2 -type d
 
 find outputs/ioai_sim_scene_place -maxdepth 2 -type d
+outputs/ioai_sim_scene_pick
+outputs/ioai_sim_scene_pick/gum
+outputs/ioai_sim_scene_pick/gum/inference
+outputs/ioai_sim_scene_pick/cocacola
+outputs/ioai_sim_scene_pick/cocacola/inference
+outputs/ioai_sim_scene_place
+outputs/ioai_sim_scene_place/water
+outputs/ioai_sim_scene_place/water/inference
+outputs/ioai_sim_scene_place/pringles
+outputs/ioai_sim_scene_place/pringles/inference
+outputs/ioai_sim_scene_place/pepsichips
+outputs/ioai_sim_scene_place/pepsichips/inference
+outputs/ioai_sim_scene_place/gum
+outputs/ioai_sim_scene_place/gum/inference
+outputs/ioai_sim_scene_place/applejuice
+outputs/ioai_sim_scene_place/applejuice/inference
+outputs/ioai_sim_scene_place/beefnoodle
+outputs/ioai_sim_scene_place/beefnoodle/inference
+outputs/ioai_sim_scene_place/orangejuice
+outputs/ioai_sim_scene_place/orangejuice/inference
+outputs/ioai_sim_scene_place/coffee
+outputs/ioai_sim_scene_place/coffee/inference
+outputs/ioai_sim_scene_place/cocacola
+outputs/ioai_sim_scene_place/cocacola/inference
