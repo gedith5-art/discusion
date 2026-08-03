@@ -1,4 +1,1 @@
-python examples/policy_baseline/03_collect_ioai_sim_scene.py \
-  --product water \
-  --episodes 1 \
-  --headless
+sed -n '1,260p' examples/policy_baseline/04_eval_ioai_policy_pipeline.py
