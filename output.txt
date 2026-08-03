@@ -1,18 +1,5 @@
-root@rm2148bpgrhcli6:/workspace/ioailab# find examples -iname "*train*"
-find . -iname "*.py" | grep train
-find data -iname "*.hdf5"
-examples/03_train.py
-examples/vision_baseline/02_train_yolo.py
-./src/ioailab/agents/policy/train.py
-./examples/03_train.py
-./examples/vision_baseline/02_train_yolo.py
-./tests/test_policy_training_api.py
-data/pringles_pick.hdf5
-data/orangejuice_pick.hdf5
-data/ioai_sim_scene_pick/beefnoodle.hdf5
-data/ioai_sim_scene_pick/water.hdf5
-data/ioai_sim_scene_pick/coffee.hdf5
-data/ioai_sim_scene_pick/cocoa.hdf5
-data/ioai_sim_scene_pick/pringles.hdf5
-data/pick_cube_demos.hdf5
-root@rm2148bpgrhcli6:/workspace/ioailab# 
+python examples/03_train.py \
+  --dataset data/pringles_pick.hdf5 \
+  --output outputs/ioai_sim_scene_pick/pringles
+
+
