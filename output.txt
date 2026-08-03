@@ -1,4 +1,15 @@
-find examples -iname "*eval*"
+root@rm2148bpgrhcli6:/workspace/ioailab# python examples/policy_baseline/03_collect_ioai_sim_scene.py
+usage: 03_collect_ioai_sim_scene.py [-h] --product {water,cocacola,beefnoodle,coffee,pringles,gum,orangejuice,pepsichips,applejuice} [--pick-checkpoint PICK_CHECKPOINT]
+                                    [--dataset-path DATASET_PATH] [--save-place-scenario SAVE_PLACE_SCENARIO | --save-place-scenario-dir SAVE_PLACE_SCENARIO_DIR]
+                                    [--episodes EPISODES] [--max-scenario-attempts MAX_SCENARIO_ATTEMPTS] [--num-envs NUM_ENVS] [--max-steps MAX_STEPS] [--headless]
+03_collect_ioai_sim_scene.py: error: the following arguments are required: --product
+There was an error running python
+root@rm2148bpgrhcli6:/workspace/ioailab# python examples/vision_baseline/07_fp_eval_pick_all.py
+usage: 07_fp_eval_pick_all.py [-h] [--table-layout TABLE_LAYOUT] [--max-products {1,2,3,4,5}] --yolo-model YOLO_MODEL [--bridge-dir BRIDGE_DIR] [--camera CAMERA]
+                              [--timeout TIMEOUT] [--episodes EPISODES] [--pick-max-steps PICK_MAX_STEPS] [--seed SEED] [--headless]
+07_fp_eval_pick_all.py: error: the following arguments are required: --yolo-model
+There was an error running python
+root@rm2148bpgrhcli6:/workspace/ioailab# find examples -iname "*eval*"
 
 find . -iname "*evaluate*"
 
@@ -7,3 +18,386 @@ grep -R "task_flow" -n examples src | head -50
 sed -n '1,260p' examples/policy_baseline/03_collect_ioai_sim_scene.py
 
 sed -n '1850,1950p' tests/test_ioai_policy_pipeline.py
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py
+examples/04_eval.py
+examples/vision_baseline/07_fp_eval_pick_all.py
+examples/vision_baseline/06_fp_eval_subtask.py
+grep: src/ioailab/tasks/common/__pycache__/composition.cpython-312.pyc: binary file matches
+examples/policy_baseline/03_collect_ioai_sim_scene.py:152:    task_flow_agent = (
+examples/policy_baseline/03_collect_ioai_sim_scene.py:161:        task_flow_agent,
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:201:        root_flow = env.unwrapped.cfg.task_flow
+examples/vision_baseline/07_fp_eval_pick_all.py:186:    root_flow = env.unwrapped.cfg.task_flow
+grep: src/ioailab/tasks/__pycache__/__init__.cpython-312.pyc: binary file matches
+src/ioailab/tasks/common/composition.py:37:    task_flow: TaskFlowSpec
+src/ioailab/tasks/common/composition.py:78:    task_flow_entry_point: str | None = None,
+src/ioailab/tasks/common/composition.py:102:        task_flow_entry_point=task_flow_entry_point
+src/ioailab/tasks/common/composition.py:103:        or f"{module_name}:{class_name}.task_flow",
+src/ioailab/tasks/common/composition.py:156:    task_flow_entry_point: str | None = None,
+src/ioailab/tasks/common/composition.py:181:    flow = _make_task_flow(specs, phase_cfgs, phase_state_getter)
+src/ioailab/tasks/common/composition.py:218:    extra_env_attrs["task_flow"] = flow
+src/ioailab/tasks/common/composition.py:231:        task_flow_entry_point=task_flow_entry_point,
+src/ioailab/tasks/common/composition.py:237:        task_flow=flow,
+src/ioailab/tasks/common/composition.py:243:    setattr(env_cls, "task_flow", flow)
+src/ioailab/tasks/common/composition.py:504:def _make_task_flow(
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/__init__.cpython-312.pyc: binary file matches
+grep: src/ioailab/tasks/pick_to_shelf/__pycache__/__init__.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene/__init__.py:28:    task_flow_entry_point=(
+src/ioailab/tasks/ioai_sim_scene/__init__.py:30:        "GalbotG1IoaiSimSceneEnvCfg.task_flow"
+grep: src/ioailab/tasks/sort_to_shelf/__pycache__/__init__.cpython-312.pyc: binary file matches
+src/ioailab/tasks/pick_to_shelf/__init__.py:29:    task_flow_entry_point=(
+src/ioailab/tasks/pick_to_shelf/__init__.py:31:        "GalbotG1PickToShelfEnvCfg.task_flow"
+src/ioailab/tasks/__init__.py:25:    task_flow_entry_point: str | None = None
+src/ioailab/tasks/__init__.py:62:    def task_flow(self) -> Any | None:
+src/ioailab/tasks/__init__.py:65:        return _load_entry_point(self.task_flow_entry_point)
+src/ioailab/tasks/__init__.py:173:        "task_flow_for_task",
+src/ioailab/tasks/__init__.py:269:def task_flow_for_task(task_id: str) -> Any:
+src/ioailab/tasks/__init__.py:273:    flow = entry.task_flow
+grep: src/ioailab/agents/flow/__pycache__/task_flow.cpython-312.pyc: binary file matches
+src/ioailab/tasks/sort_to_shelf/__init__.py:28:    task_flow_entry_point=(
+src/ioailab/tasks/sort_to_shelf/__init__.py:30:        "GalbotG1SortToShelfEnvCfg.task_flow"
+src/ioailab/tasks/sort_to_shelf_pick/config/g1/env_cfg.py:158:    _configure_sorting_task_flow(cfg, selected_object)
+src/ioailab/tasks/sort_to_shelf_pick/config/g1/env_cfg.py:301:def _configure_sorting_task_flow(cfg: Any, object_name: str) -> None:
+src/ioailab/tasks/sort_to_shelf_pick/config/g1/env_cfg.py:302:    flow = getattr(cfg, "task_flow", None)
+src/ioailab/tasks/sort_to_shelf_pick/config/g1/env_cfg.py:332:    cfg.task_flow = TaskFlowSpec(
+grep: src/ioailab/agents/flow/__pycache__/__init__.cpython-312.pyc: binary file matches
+grep: src/ioailab/envs/__pycache__/flow.cpython-312.pyc: binary file matches
+src/ioailab/agents/flow/__init__.py:10:from ioailab.agents.flow.task_flow import (
+src/ioailab/agents/flow/task_flow.py:164:        flow = _flow_from_env(env) or tasks.task_flow_for_task(str(task_id))
+src/ioailab/agents/flow/task_flow.py:250:    flow = getattr(cfg, "task_flow", None)
+src/ioailab/agents/flow/task_flow.py:253:    flow = getattr(unwrapped, "task_flow", None)
+src/ioailab/envs/flow.py:19:    flow = _task_flow_from_env(unwrapped)
+src/ioailab/envs/flow.py:34:    flow = _task_flow_from_env(unwrapped)
+src/ioailab/envs/flow.py:84:def _task_flow_from_env(env: Any) -> TaskFlowSpec:
+src/ioailab/envs/flow.py:87:    flow = getattr(cfg, "task_flow", None)
+src/ioailab/envs/flow.py:89:        flow = getattr(unwrapped, "task_flow", None)
+src/ioailab/envs/flow.py:91:        raise ValueError("Combined task env cfg must expose TaskFlowSpec task_flow.")
+src/ioailab/envs/flow.py:98:    state_attr = "_ioailab_task_flow_phase_names"
+"""Run one IOAI Pick→Nav→Place pipeline and capture the Place start."""
+
+from __future__ import annotations
+
+import argparse
+from typing import Any
+
+from ioailab.agents import PolicyAgent, TaskFlowAgent
+from ioailab.envs import make_env
+from ioailab.tasks.ioai_sim_scene.scenario_capture import (
+    PlaceStartScenarioCaptureAgent,
+)
+from ioailab.tasks.ioai_sim_scene.scene import IOAI_SIM_SCENE_FLOW_PRODUCT_IDS
+from ioailab.utils.log_utils import configure, get_logger
+
+logger = get_logger(__name__)
+
+TASK_ID = "GalbotG1-IOAISimScene-v0"
+
+
+def _evaluate_until_scenario_count(
+    env: Any,
+    agent: PlaceStartScenarioCaptureAgent,
+    *,
+    target_scenarios: int,
+    max_attempts: int,
+    max_steps: int,
+    product: str,
+) -> dict[str, int | float]:
+    """Evaluate batches until the requested number of Scenarios is captured."""
+
+    if target_scenarios < 1:
+        raise ValueError("target_scenarios must be greater than zero.")
+    if max_attempts < target_scenarios:
+        raise ValueError("max_attempts must be at least target_scenarios.")
+
+    attempts = 0
+    success_count = 0
+    while len(agent.saved_paths) < target_scenarios:
+        remaining_attempts = max_attempts - attempts
+        if remaining_attempts <= 0:
+            raise RuntimeError(
+                f"Scenario collection captured {len(agent.saved_paths)} of "
+                f"{target_scenarios} {product} Place starts after {attempts} attempts."
+            )
+        batch_size = min(
+            target_scenarios - len(agent.saved_paths),
+            remaining_attempts,
+        )
+        metrics = env.evaluate(
+            agent=agent,
+            episodes=batch_size,
+            max_steps=max_steps,
+        )
+        evaluated = int(metrics["total_episodes"])
+        if evaluated != batch_size:
+            raise RuntimeError(
+                f"Expected evaluation batch size {batch_size}, got {evaluated}."
+            )
+        attempts += evaluated
+        success_count += int(metrics["success_count"])
+        logger.info(
+            "Captured %s/%s %s Place start Scenario(s) after %s attempt(s)",
+            len(agent.saved_paths),
+            target_scenarios,
+            product,
+            attempts,
+        )
+
+    if len(agent.saved_paths) != target_scenarios:
+        raise RuntimeError(
+            f"Scenario collection exceeded target {target_scenarios}: "
+            f"captured {len(agent.saved_paths)}."
+        )
+    return {
+        "total_episodes": attempts,
+        "success_count": success_count,
+        "success_rate": success_count / float(attempts),
+    }
+
+
+def main(argv: list[str] | None = None) -> None:
+    configure()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--product",
+        choices=IOAI_SIM_SCENE_FLOW_PRODUCT_IDS,
+        required=True,
+        help="Exact non-cocoa product to run through the pipeline.",
+    )
+    parser.add_argument(
+        "--pick-checkpoint",
+        default=None,
+        help="Optional Pick policy checkpoint; Nav and Place remain task defaults.",
+    )
+    parser.add_argument(
+        "--dataset-path",
+        default=None,
+        help="Optional full-pipeline HDF5 output path; omit to save only Scenario.",
+    )
+    scenario_output = parser.add_mutually_exclusive_group()
+    scenario_output.add_argument(
+        "--save-place-scenario",
+        default=None,
+        help=(
+            "Nav→Place Scenario YAML path. Defaults to "
+            "data/ioai_sim_scene_place/scenarios/<product>.yaml."
+        ),
+    )
+    scenario_output.add_argument(
+        "--save-place-scenario-dir",
+        default=None,
+        help="Directory for numbered Nav→Place Scenarios: 000.yaml, 001.yaml, ...",
+    )
+    parser.add_argument("--episodes", type=int, default=1)
+    parser.add_argument(
+        "--max-scenario-attempts",
+        type=int,
+        default=None,
+        help=(
+            "Maximum full-pipeline attempts when collecting a Scenario directory; "
+            "defaults to 10 times --episodes."
+        ),
+    )
+    parser.add_argument("--num-envs", type=int, default=1)
+    parser.add_argument("--max-steps", type=int, default=3000)
+    parser.add_argument("--headless", action="store_true")
+    args = parser.parse_args(argv)
+
+    if args.save_place_scenario_dir is not None and args.num_envs != 1:
+        raise ValueError("--save-place-scenario-dir requires --num-envs 1.")
+    if args.max_scenario_attempts is not None and (
+        args.save_place_scenario_dir is None or args.dataset_path is not None
+    ):
+        raise ValueError(
+            "--max-scenario-attempts requires Scenario-only "
+            "--save-place-scenario-dir collection."
+        )
+
+    scenario_path = None
+    if args.save_place_scenario_dir is None:
+        scenario_path = args.save_place_scenario or (
+            f"data/ioai_sim_scene_place/scenarios/{args.product}.yaml"
+        )
+    env = make_env(
+        TASK_ID,
+        num_envs=args.num_envs,
+        headless=args.headless,
+        enable_recorders=args.dataset_path is not None,
+        task_options={"pick_product": args.product},
+    )
+    task_flow_agent = (
+        TaskFlowAgent.from_env(env)
+        if args.pick_checkpoint is None
+        else TaskFlowAgent.from_env(
+            env,
+            agents={"pick": PolicyAgent.from_checkpoint(args.pick_checkpoint)},
+        )
+    )
+    agent = PlaceStartScenarioCaptureAgent(
+        task_flow_agent,
+        product=args.product,
+        path=scenario_path,
+        directory=args.save_place_scenario_dir,
+    )
+    try:
+        if args.dataset_path is None:
+            if args.save_place_scenario_dir is None:
+                metrics = env.evaluate(
+                    agent=agent,
+                    episodes=args.episodes,
+                    max_steps=args.max_steps,
+                )
+            else:
+                max_attempts = args.max_scenario_attempts or args.episodes * 10
+                metrics = _evaluate_until_scenario_count(
+                    env,
+                    agent,
+                    target_scenarios=args.episodes,
+                    max_attempts=max_attempts,
+                    max_steps=args.max_steps,
+                    product=args.product,
+                )
+            logger.info(
+                "Ran %s full-pipeline %s attempt(s) without saving HDF5 "
+                "(full-task success rate %.1f%%)",
+                metrics["total_episodes"],
+                args.product,
+                metrics["success_rate"] * 100.0,
+            )
+        else:
+            dataset = env.collect(
+                agent=agent,
+                path=args.dataset_path,
+                episodes=args.episodes,
+                max_steps=args.max_steps,
+            )
+            logger.info(
+                "Saved %s full-pipeline %s episode(s) to %s",
+                args.episodes,
+                args.product,
+                dataset.path,
+            )
+        if not agent.saved_paths:
+            raise RuntimeError(
+                "Pipeline did not reach the Nav→Place transition; no Place "
+                "Scenario was saved."
+            )
+        if (
+            args.save_place_scenario_dir is not None
+            and len(agent.saved_paths) != args.episodes
+        ):
+            raise RuntimeError(
+                f"Expected {args.episodes} Place start Scenarios, but captured "
+                f"{len(agent.saved_paths)}."
+            )
+        logger.info(
+            "Saved %s %s Place start Scenario(s): %s",
+            len(agent.saved_paths),
+            args.product,
+            agent.saved_paths,
+        )
+    finally:
+        env.close()
+
+
+if __name__ == "__main__":
+    main()
+            body_pos_w=torch.tensor([[[0.02, 0.0, 0.0]]]),
+            body_quat_w=torch.tensor([[[0.0, 0.0, 0.0, 1.0]]]),
+        ),
+        find_joints=lambda names: (list(range(len(names))), list(names)),
+    )
+    scene = _Scene(robot=robot)
+    env = SimpleNamespace(num_envs=1, device="cpu", scene=scene)
+    agent = IoaiPickReadyPostureAgent(
+        targets_by_joint=dict.fromkeys(joint_names, 0.0),
+        max_joint_abs_error=IOAI_POLICY_RETURN_MAX_JOINT_ABS_ERROR,
+        settle_steps=10,
+        base_goal_xy=(0.0, 0.0),
+        base_goal_yaw=0.0,
+    )
+    agent.reset(env)
+
+    for _ in range(12):
+        agent.act(env)
+    assert agent.done(env) == (False,)
+
+    robot.data.body_pos_w[0, 0, 0] = 0.0
+    for _ in range(9):
+        agent.act(env)
+    assert agent.done(env) == (False,)
+    agent.act(env)
+    assert agent.done(env) == (True,)
+
+
+def _write_checkpoint(directory: Path, task_id: str) -> Path:
+    directory.mkdir(parents=True)
+    checkpoint = directory / "model_inference.pth"
+    checkpoint.touch()
+    (directory / "config.json").write_text(
+        json.dumps({"experiment": {"name": task_id}}),
+        encoding="utf-8",
+    )
+    (directory / "action_norm_params.json").write_text(
+        json.dumps({"action_shape": [16]}),
+        encoding="utf-8",
+    )
+    return checkpoint
+
+
+def _write_scenario(path: Path, product: str) -> Path:
+    path.write_text(
+        yaml.safe_dump(
+            {
+                "schema": "ioailabScenario-v0",
+                "frame": "env",
+                "metadata": {
+                    "task_id": "GalbotG1-IOAISimScene-v0",
+                    "kind": "place_start",
+                    "product": product,
+                    "transition": "nav_to_place",
+                },
+                "assets": {
+                    "articulation": {
+                        "robot": {
+                            "base_pose": [
+                                0.51,
+                                -0.02,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.01499943750632809,
+                                0.9998875021093592,
+                            ],
+                            "joint_position": {
+                                joint_name: float(index + 1)
+                                for index, joint_name in enumerate(
+                                    (
+                                        *G1_BASE_WHEEL_DOF_ORDER,
+                                        *G1_ASSET_INTERNAL_DRIVEN_JOINT_NAMES,
+                                        *IOAI_SIM_SCENE_PLACE_PHYSICAL_JOINT_NAMES,
+                                        *G1_LEFT_GRIPPER_DOF_ORDER,
+                                        *G1_RIGHT_GRIPPER_DOF_ORDER,
+                                    )
+                                )
+                            },
+                        }
+                    }
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
+def _write_manifest(path: Path, products: dict[str, dict[str, str]]) -> None:
+    path.write_text(
+        yaml.safe_dump(
+            {
+                "schema": POLICY_MANIFEST_SCHEMA,
+                "products": products,
+            }
+        ),
+        encoding="utf-8",
+    )
+root@rm2148bpgrhcli6:/workspace/ioailab# 
+
