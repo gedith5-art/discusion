@@ -1,7 +1,64 @@
-sed -n '1,200p' src/ioailab/tasks/ioai_sim_scene/__init__.py
+oot@rm2148bpgrhcli6:/workspace/ioailab# python - <<'PY'
+import gymnasium as gym
 
-python - <<'PY'
+ids = sorted(
+    spec.id
+    for spec in gym.registry.values()
+    if "IOAISimScene" in spec.id
+)
+
+for i in ids:
+    print(i)
+PY
+root@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,200p' src/ioailab/tasks/ioai_sim_scene/__init__.py
+"""Coherent Galbot G1 IOAI simulation task registry."""
+
+from __future__ import annotations
+
+from typing import Final
+
+from ioailab.tasks import TaskSpec
+
+GALBOT_G1_IOAI_SIM_SCENE_TASK_ID: Final = "GalbotG1-IOAISimScene-v0"
+GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID: Final = "GalbotG1-IOAISimScene-Pick-v0"
+GALBOT_G1_IOAI_SIM_SCENE_NAV_TASK_ID: Final = "GalbotG1-IOAISimScene-Nav-v0"
+GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID: Final = "GalbotG1-IOAISimScene-Place-v0"
+
+GALBOT_G1_IOAI_SIM_SCENE_TASK_IDS: Final = (
+    GALBOT_G1_IOAI_SIM_SCENE_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_NAV_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID,
+)
+GALBOT_G1_IOAI_SIM_SCENE_TASK: Final = TaskSpec(
+    task_id=GALBOT_G1_IOAI_SIM_SCENE_TASK_ID,
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    isaaclab_kwargs={
+        "env_cfg_entry_point": (
+            "ioailab.tasks.ioai_sim_scene.config.g1.env_cfg:GalbotG1IoaiSimSceneEnvCfg"
+        ),
+    },
+    task_flow_entry_point=(
+        "ioailab.tasks.ioai_sim_scene.config.g1.env_cfg:"
+        "GalbotG1IoaiSimSceneEnvCfg.task_flow"
+    ),
+    requires_cameras=True,
+)
+GALBOT_G1_IOAI_SIM_SCENE_TASKS: Final = (GALBOT_G1_IOAI_SIM_SCENE_TASK,)
+
+__all__ = [
+    "GALBOT_G1_IOAI_SIM_SCENE_NAV_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASK",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASK_IDS",
+    "GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASKS",
+]
+root@rm2148bpgrhcli6:/workspace/ioailab# python - <<'PY'
 from ioailab.tasks import task_entry_for_task_id
 
 print(task_entry_for_task_id("GalbotG1-IOAISimScene-v0"))
 PY
+TaskSpec(task_id='GalbotG1-IOAISimScene-v0', entry_point='isaaclab.envs:ManagerBasedRLEnv', isaaclab_kwargs={'env_cfg_entry_point': 'ioailab.tasks.ioai_sim_scene.config.g1.env_cfg:GalbotG1IoaiSimSceneEnvCfg'}, motion_plan_entry_point=None, nav_agent_entry_point=None, task_flow_entry_point='ioailab.tasks.ioai_sim_scene.config.g1.env_cfg:GalbotG1IoaiSimSceneEnvCfg.task_flow', requires_cameras=True, reset_randomization_events=())
+root@rm2148bpgrhcli6:/workspace/ioailab# 
