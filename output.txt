@@ -1,25 +1,21 @@
-mkdir -p outputs/ioai_sim_scene_pick/pringles/inference
-cp outputs/ioai_sim_scene_pick/gum/inference/* \
-   outputs/ioai_sim_scene_pick/pringles/inference/
+schema: ioailabIoaiPolicyManifest-v0
+products:
+  gum:
+    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
+    place_checkpoint: ioai_sim_scene_place/gum/inference/model_inference.pth
+    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/gum.yaml
+  cocacola:
+    pick_checkpoint: ioai_sim_scene_pick/cocacola/inference/model_inference.pth
+    place_checkpoint: ioai_sim_scene_place/cocacola/inference/model_inference.pth
+    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/cocacola
+  pringles:
+    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
+    place_checkpoint: ioai_sim_scene_place/pringles/inference/model_inference.pth
+    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/pringles.yaml
+  orangejuice:
+    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
+    place_checkpoint: ioai_sim_scene_place/orangejuice/inference/model_inference.pth
+    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/orangejuice.yaml
 
-mkdir -p outputs/ioai_sim_scene_pick/orangejuice/inference
-cp outputs/ioai_sim_scene_pick/gum/inference/* \
-   outputs/ioai_sim_scene_pick/orangejuice/inference/
-
-mkdir -p outputs/ioai_sim_scene_pick/cocoa/inference
-cp outputs/ioai_sim_scene_pick/gum/inference/* \
-   outputs/ioai_sim_scene_pick/cocoa/inference/
-
-
-pringles:
-  pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
-  place_checkpoint: ioai_sim_scene_place/pringles/inference/model_inference.pth
-  place_start_scenario: ../data/ioai_sim_scene_place/scenarios/pringles.yaml
-
-orangejuice:
-  pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
-  place_checkpoint: ioai_sim_scene_place/orangejuice/inference/model_inference.pth
-  place_start_scenario: ../data/ioai_sim_scene_place/scenarios/orangejuice.yaml
-
-cocoa:
-  pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
+  cocoa:
+    pick_checkpoint: ioai_sim_scene_pick/gum/inference/model_inference.pth
