@@ -1,7 +1,564 @@
-sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/__init__.py
+root@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/__init__.py
 sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/task.py
 sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/runtime_state.py
 sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py
 grep -R "final.usda" -n src
 grep -R "Tray01" -n src
 grep -R "Shelf5Tier02" -n src
+"""Coherent Galbot G1 IOAI simulation task registry."""
+
+from __future__ import annotations
+
+from typing import Final
+
+from ioailab.tasks import TaskSpec
+
+GALBOT_G1_IOAI_SIM_SCENE_TASK_ID: Final = "GalbotG1-IOAISimScene-v0"
+GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID: Final = "GalbotG1-IOAISimScene-Pick-v0"
+GALBOT_G1_IOAI_SIM_SCENE_NAV_TASK_ID: Final = "GalbotG1-IOAISimScene-Nav-v0"
+GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID: Final = "GalbotG1-IOAISimScene-Place-v0"
+
+GALBOT_G1_IOAI_SIM_SCENE_TASK_IDS: Final = (
+    GALBOT_G1_IOAI_SIM_SCENE_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_NAV_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID,
+)
+GALBOT_G1_IOAI_SIM_SCENE_TASK: Final = TaskSpec(
+    task_id=GALBOT_G1_IOAI_SIM_SCENE_TASK_ID,
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    isaaclab_kwargs={
+        "env_cfg_entry_point": (
+            "ioailab.tasks.ioai_sim_scene.config.g1.env_cfg:GalbotG1IoaiSimSceneEnvCfg"
+        ),
+    },
+    task_flow_entry_point=(
+        "ioailab.tasks.ioai_sim_scene.config.g1.env_cfg:"
+        "GalbotG1IoaiSimSceneEnvCfg.task_flow"
+    ),
+    requires_cameras=True,
+)
+GALBOT_G1_IOAI_SIM_SCENE_TASKS: Final = (GALBOT_G1_IOAI_SIM_SCENE_TASK,)
+
+__all__ = [
+    "GALBOT_G1_IOAI_SIM_SCENE_NAV_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASK",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASK_IDS",
+    "GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID",
+    "GALBOT_G1_IOAI_SIM_SCENE_TASKS",
+]
+sed: can't read src/ioailab/tasks/ioai_sim_scene/task.py: No such file or directory
+"""Runtime product activation and immutable table-layout helpers."""
+
+from __future__ import annotations
+
+from collections.abc import Mapping, Sequence
+from typing import Any
+
+import torch
+
+from ioailab.robots.g1 import (
+    G1_ASSET_INTERNAL_DRIVEN_JOINT_NAMES,
+    G1_BASE_WHEEL_DOF_ORDER,
+    G1_LEFT_ARM_DOF_ORDER,
+    G1_LEG_DOF_ORDER,
+    G1_RIGHT_ARM_DOF_ORDER,
+)
+from ioailab.tasks.ioai_sim_scene.scene import (
+    IOAI_SIM_SCENE_PICK_PRODUCT_IDS,
+    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID,
+)
+from ioailab.tasks.ioai_sim_scene.table_layout import IoaiTableLayout
+from ioailab.tasks.ioai_sim_scene_pick.mdp.events import (
+    update_pick_target_from_current_product,
+)
+from ioailab.tasks.ioai_sim_scene_pick.runtime_state import (
+    set_selected_product_indices,
+    table_layout_occupancy,
+    table_layout_product_indices,
+)
+from ioailab.tasks.ioai_sim_scene_place.mdp.events import initialize_place_targets
+
+_PLACE_PHYSICAL_JOINT_TARGET_ATTR = "_ioai_place_physical_joint_targets"
+_PLACE_POLICY_JOINT_REFERENCE_ATTR = "_ioai_place_policy_joint_references"
+IOAI_SIM_SCENE_PLACE_PHYSICAL_JOINT_NAMES = (
+    *G1_LEG_DOF_ORDER,
+    *G1_LEFT_ARM_DOF_ORDER,
+    *G1_RIGHT_ARM_DOF_ORDER,
+)
+IOAI_SIM_SCENE_POLICY_ALIGNED_JOINT_NAMES = (
+    *G1_BASE_WHEEL_DOF_ORDER,
+    *G1_ASSET_INTERNAL_DRIVEN_JOINT_NAMES,
+)
+
+
+def read_table_layout(env: Any, *, env_id: int = 0) -> IoaiTableLayout:
+    """Read the reset-time table layout snapshot without consulting live poses."""
+
+    unwrapped = _unwrapped_env(env)
+    device = getattr(unwrapped, "device", "cpu")
+    num_envs = int(unwrapped.num_envs)
+    row = int(env_id)
+    if not 0 <= row < num_envs:
+        raise ValueError(f"env_id {row} is outside [0, {num_envs}).")
+    indices = table_layout_product_indices(
+        unwrapped,
+        num_envs=num_envs,
+        product_count=len(IOAI_SIM_SCENE_PICK_PRODUCT_IDS),
+        device=device,
+    )[row]
+    occupancy = table_layout_occupancy(
+        unwrapped,
+        num_envs=num_envs,
+        device=device,
+    )[row]
+    product_by_index = {
+        index: product_id
+        for product_id, index in IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID.items()
+    }
+    return IoaiTableLayout(
+        products=tuple(product_by_index[int(index)] for index in indices.tolist()),
+        occupancy=tuple(bool(value) for value in occupancy.tolist()),
+    )
+
+
+def activate_pipeline_product(
+    env: Any,
+    product_id: str,
+    *,
+    env_ids: tuple[int, ...] = (0,),
+) -> None:
+    """Activate one live product by updating target state only.
+
+    This operation deliberately does not write robot joints, grippers, or product
+    root poses. The saved layout is also left untouched.
+    """
+
+    resolved = str(product_id)
+    if resolved not in IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID:
+        choices = ", ".join(IOAI_SIM_SCENE_PICK_PRODUCT_IDS)
+        raise ValueError(
+            f"Unknown IOAI product {resolved!r}; expected one of {choices}."
+        )
+    unwrapped = _unwrapped_env(env)
+    rows = tuple(int(env_id) for env_id in env_ids)
+    if not rows:
+        raise ValueError("env_ids must not be empty.")
+    for row in rows:
+        layout = read_table_layout(unwrapped, env_id=row)
+        matches = tuple(
+            index
+            for index, candidate in enumerate(layout.products)
+            if candidate == resolved and layout.occupancy[index]
+        )
+        if len(matches) != 1:
+            raise RuntimeError(
+                f"Product {resolved!r} must occupy exactly one saved slot in env {row}."
+            )
+
+    device = getattr(unwrapped, "device", "cpu")
+    ids = torch.tensor(rows, device=device, dtype=torch.long)
+    product_index = IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID[resolved]
+    selected = torch.full((len(rows),), product_index, device=device, dtype=torch.long)
+    set_selected_product_indices(
+        unwrapped,
+        env_ids=ids,
+        selected_product_indices=selected,
+    )
+    reset_params = unwrapped.cfg.events.reset_all.params
+    pick_params = reset_params["pick_scene_params"]
+    update_pick_target_from_current_product(
+        unwrapped,
+        ids,
+        selected_product_indices=selected,
+        product_cfgs=pick_params["product_cfgs"],
+        pick_target_cfg=pick_params["pick_target_cfg"],
+        product_geometry_centers=pick_params["product_geometry_centers"],
+        product_pick_target_z_offsets=pick_params["product_pick_target_z_offsets"],
+    )
+    initialize_place_targets(
+        unwrapped,
+        ids,
+        product_count=int(reset_params["product_count"]),
+        shelf_layers=reset_params["shelf_layers"],
+        shelf_position=reset_params["shelf_position"],
+        shelf_orientation_xyzw=reset_params["shelf_orientation_xyzw"],
+    )
+    unwrapped.cfg.selected_ioai_product = resolved
+
+
+def set_place_navigation_goal(
+    env: Any,
+    *,
+    base_xy: Sequence[float],
+    base_yaw: float,
+) -> None:
+    """Use a Place Scenario base pose as the live Nav target without teleporting."""
+
+    coordinates = tuple(float(value) for value in base_xy)
+    if len(coordinates) != 2:
+        raise ValueError("Place navigation base_xy must contain exactly two values.")
+    unwrapped = _unwrapped_env(env)
+    cfg = unwrapped.cfg
+    current_goal = tuple(float(value) for value in cfg.goal_position)
+    goal_z = current_goal[2] if len(current_goal) >= 3 else 0.0
+    cfg.goal_position = (coordinates[0], coordinates[1], goal_z)
+    cfg.goal_yaw = float(base_yaw)
+
+
+def set_place_physical_joint_targets(
+    env: Any,
+    *,
+    env_ids: Sequence[int],
+    joint_positions: Mapping[str, float],
+) -> None:
+    """Store Scenario leg and arm targets for physical Nav alignment only."""
+
+    missing = tuple(
+        name
+        for name in IOAI_SIM_SCENE_PLACE_PHYSICAL_JOINT_NAMES
+        if name not in joint_positions
+    )
+    if missing:
+        raise ValueError(
+            f"Place physical joint targets are missing joint(s): {missing}."
+        )
+    targets = {
+        name: float(joint_positions[name])
+        for name in IOAI_SIM_SCENE_PLACE_PHYSICAL_JOINT_NAMES
+    }
+    _set_per_row_joint_positions(
+        env,
+        env_ids=env_ids,
+        joint_positions=targets,
+        attribute_name=_PLACE_PHYSICAL_JOINT_TARGET_ATTR,
+        description="Place physical joint targets",
+    )
+
+
+def place_physical_joint_targets(
+    env: Any,
+) -> tuple[Mapping[str, float] | None, ...]:
+    """Return per-row physical Nav targets without changing simulation state."""
+
+    return _per_row_joint_positions(
+        env,
+        attribute_name=_PLACE_PHYSICAL_JOINT_TARGET_ATTR,
+    )
+
+
+def set_place_policy_joint_reference(
+    env: Any,
+    *,
+    env_ids: Sequence[int],
+    joint_positions: Mapping[str, float],
+) -> None:
+    """Store per-row Scenario joints used only by the Place policy observation."""
+
+    _set_per_row_joint_positions(
+        env,
+        env_ids=env_ids,
+        joint_positions=joint_positions,
+        attribute_name=_PLACE_POLICY_JOINT_REFERENCE_ATTR,
+        description="Place policy joint reference",
+    )
+
+
+def place_policy_joint_references(
+    env: Any,
+) -> tuple[Mapping[str, float] | None, ...]:
+    """Return per-row Place policy references without changing simulation state."""
+
+    return _per_row_joint_positions(
+        env,
+        attribute_name=_PLACE_POLICY_JOINT_REFERENCE_ATTR,
+    )
+
+
+def _set_per_row_joint_positions(
+    env: Any,
+    *,
+    env_ids: Sequence[int],
+    joint_positions: Mapping[str, float],
+    attribute_name: str,
+    description: str,
+) -> None:
+    unwrapped = _unwrapped_env(env)
+    num_envs = int(unwrapped.num_envs)
+    rows = tuple(int(env_id) for env_id in env_ids)
+    if not rows:
+        raise ValueError("env_ids must not be empty.")
+    invalid_rows = tuple(row for row in rows if not 0 <= row < num_envs)
+    if invalid_rows:
+        raise ValueError(
+            f"env_ids {invalid_rows} are outside the valid range [0, {num_envs})."
+        )
+    reference = {str(name): float(value) for name, value in joint_positions.items()}
+    if not reference:
+        raise ValueError(f"{description} must not be empty.")
+
+    references = getattr(unwrapped, attribute_name, None)
+"""Policy routing and compound-agent helpers for the IOAI baseline."""
+
+from __future__ import annotations
+
+from collections import OrderedDict
+from collections.abc import Callable, Mapping, Sequence
+from concurrent.futures import Future, ThreadPoolExecutor
+from dataclasses import dataclass
+from functools import lru_cache
+import json
+from pathlib import Path
+from typing import Any
+
+import torch
+import yaml
+
+from ioailab.agents import (
+    BaseAgent,
+    PolicyAgent,
+    TrajectoryNavAgent,
+    agent_sequence,
+    agent_step,
+)
+from ioailab.agents.io import EnvIds
+from ioailab.robots.g1.spec import (
+    G1_LEFT_ARM_DOF_ORDER,
+    G1_LEFT_GRIPPER_DOF_ORDER,
+    G1_LEG_DOF_ORDER,
+    G1_RIGHT_ARM_DOF_ORDER,
+    G1_RIGHT_GRIPPER_DOF_ORDER,
+)
+from ioailab.robots.g1.profile import G1_PROFILE
+from ioailab.tasks.common.scenario import Scenario
+from ioailab.tasks.common.scenario_set import load_scenario_set
+from ioailab.tasks.ioai_sim_scene import (
+    GALBOT_G1_IOAI_SIM_SCENE_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID,
+    GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID,
+)
+from ioailab.tasks.ioai_sim_scene.arm_selection import select_shared_manipulation_arm
+from ioailab.tasks.ioai_sim_scene.runtime_state import (
+    IOAI_SIM_SCENE_PLACE_PHYSICAL_JOINT_NAMES,
+    IOAI_SIM_SCENE_POLICY_ALIGNED_JOINT_NAMES,
+    activate_pipeline_product,
+    place_physical_joint_targets,
+    read_table_layout,
+    place_policy_joint_references,
+    set_place_policy_joint_reference,
+    set_place_navigation_goal,
+    set_place_physical_joint_targets,
+)
+from ioailab.tasks.ioai_sim_scene.scene import (
+    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID,
+    IOAI_SIM_SCENE_PRODUCT_SCENE_NAMES,
+)
+from ioailab.tasks.ioai_sim_scene.table_layout import (
+    IOAI_TABLE_LAYOUT_B1_PRODUCTS,
+    IOAI_TABLE_LAYOUT_B2_PRODUCTS,
+    IoaiTableLayout,
+)
+from ioailab.tasks.ioai_sim_scene_nav.agent import nav_agent, nav_sequence_agent
+from ioailab.tasks.ioai_sim_scene_pick.config.g1.postures import (
+    G1_IOAI_SIM_SCENE_ARM_CARRY_JOINT_POS_BY_ARM,
+    G1_IOAI_SIM_SCENE_LEFT_ARM_READY_JOINT_POS,
+    G1_IOAI_SIM_SCENE_LEG_INITIAL_JOINT_POS,
+    G1_IOAI_SIM_SCENE_PICK_BASE_ORIENTATION,
+    G1_IOAI_SIM_SCENE_PICK_BASE_POSITION,
+    G1_IOAI_SIM_SCENE_RIGHT_ARM_INITIAL_JOINT_POS,
+)
+from ioailab.tasks.ioai_sim_scene_pick.mdp.terminations import (
+    IOAI_SIM_SCENE_MAX_PRODUCT_GRIPPER_CENTER_DISTANCE_M,
+    IOAI_SIM_SCENE_PICK_CARRY_MAX_JOINT_ABS_ERROR,
+    IOAI_SIM_SCENE_PLACE_GRIPPER_OPEN_MAX_POSITION,
+)
+from ioailab.tasks.ioai_sim_scene_pick.runtime_state import (
+    selected_product_root_positions,
+)
+from ioailab.tasks.ioai_sim_scene_place.mdp.terminations import (
+    IOAI_SIM_SCENE_PLACE_UPRIGHT_MIN_DOT,
+    IOAI_SIM_SCENE_PLACE_XY_TOLERANCE,
+    IOAI_SIM_SCENE_PLACE_Z_TOLERANCE,
+)
+from ioailab.tasks.ioai_sim_scene_place.runtime_state import place_target_positions
+
+from ioailab.utils.log_utils import get_logger
+
+logger = get_logger(__name__)
+
+POLICY_MANIFEST_SCHEMA = "ioailabIoaiPolicyManifest-v0"
+B1_PRODUCT_IDS = IOAI_TABLE_LAYOUT_B1_PRODUCTS
+B2_PRODUCT_IDS = IOAI_TABLE_LAYOUT_B2_PRODUCTS
+MANIPULATION_ACTION_TERMS = (
+    "left_arm",
+    "left_gripper",
+    "right_arm",
+    "right_gripper",
+)
+RETURN_ACTION_TERMS = (
+    "legs",
+    "left_arm",
+    "left_gripper",
+    "right_arm",
+    "right_gripper",
+)
+IOAI_SIM_SCENE_GRASP_MATCH_JOINT_NAMES = (
+    *G1_LEFT_ARM_DOF_ORDER,
+    *G1_LEFT_GRIPPER_DOF_ORDER,
+    *G1_RIGHT_ARM_DOF_ORDER,
+    *G1_RIGHT_GRIPPER_DOF_ORDER,
+)
+
+IOAI_POLICY_RETURN_BASE_CONTROL_RADIUS = 0.003
+IOAI_POLICY_RETURN_BASE_SUCCESS_RADIUS = 0.008
+IOAI_POLICY_RETURN_BASE_MAX_LINEAR_SPEED = 0.02
+IOAI_POLICY_RETURN_BASE_MAX_ANGULAR_SPEED = 0.02
+IOAI_POLICY_RETURN_MAX_JOINT_ABS_ERROR = 0.05
+IOAI_POLICY_RETURN_SETTLE_MAX_JOINT_ABS_ERROR = 0.005
+IOAI_POLICY_RETURN_MAX_JOINT_SPEED = 0.05
+IOAI_POLICY_RETURN_SETTLE_MAX_JOINT_SPEED = 0.02
+IOAI_POLICY_RETURN_WAYPOINT_TOLERANCE = 0.05
+IOAI_POLICY_RETURN_YAW_CONTROL_TOLERANCE = 0.005
+IOAI_POLICY_RETURN_YAW_TOLERANCE = 0.01
+IOAI_POLICY_MANIPULATION_BASE_HOLD_RADIUS = 0.0005
+IOAI_POLICY_MANIPULATION_BASE_HOLD_YAW_TOLERANCE = 0.001
+IOAI_POLICY_MANIPULATION_BASE_HOLD_WAYPOINT_TOLERANCE = 0.01
+IOAI_POLICY_MANIPULATION_BASE_HOLD_POSITION_GAIN = 4.0
+IOAI_POLICY_MANIPULATION_BASE_HOLD_YAW_GAIN = 4.0
+
+
+IOAI_PIPELINE_PHASES = ("pick", "nav", "place")
+IOAI_PIPELINE_PHASE_SCORE = 5
+IOAI_PIPELINE_COMPLETION_BONUS = 5
+
+
+@dataclass(frozen=True, slots=True)
+class IoaiPipelineLimits:
+    """Bound one product attempt without terminating the whole work order."""
+
+    pick_max_steps: int = 1200
+    nav_max_steps: int = 1200
+    place_max_steps: int = 1200
+    drop_confirm_steps: int = 20
+    delivery_stable_steps: int = 10
+
+    def __post_init__(self) -> None:
+        values = {
+            "pick_max_steps": self.pick_max_steps,
+            "nav_max_steps": self.nav_max_steps,
+            "place_max_steps": self.place_max_steps,
+            "drop_confirm_steps": self.drop_confirm_steps,
+            "delivery_stable_steps": self.delivery_stable_steps,
+        }
+        invalid = tuple(name for name, value in values.items() if int(value) < 1)
+        if invalid:
+            raise ValueError(f"IOAI pipeline limits must be positive: {invalid}.")
+
+    def max_steps(self, phase: str) -> int:
+        """Return the configured budget for one canonical phase."""
+
+        phase_name = str(phase)
+        if phase_name not in IOAI_PIPELINE_PHASES:
+            raise ValueError(f"Unknown IOAI pipeline phase {phase_name!r}.")
+        return int(getattr(self, f"{phase_name}_max_steps"))
+
+
+class _IoaiProductScore:
+    """Mutable per-product score state owned by one episode scorecard."""
+
+    def __init__(self, product_id: str) -> None:
+        self.product_id = str(product_id)
+        self.phase_status = {phase: "pending" for phase in IOAI_PIPELINE_PHASES}
+        self.failure: dict[str, str] | None = None
+
+    def mark_success(self, phase: str) -> None:
+        phase_name = _validate_pipeline_phase(phase)
+        if self.phase_status[phase_name] in {"failed", "skipped"}:
+            raise RuntimeError(
+                f"Cannot mark {self.product_id}/{phase_name} successful after failure."
+            )
+        self.phase_status[phase_name] = "success"
+
+    def mark_failure(self, phase: str, reason: str) -> None:
+        phase_name = _validate_pipeline_phase(phase)
+        if self.failure is not None:
+            return
+        self.phase_status[phase_name] = "failed"
+        phase_index = IOAI_PIPELINE_PHASES.index(phase_name)
+        for skipped_phase in IOAI_PIPELINE_PHASES[phase_index + 1 :]:
+            if self.phase_status[skipped_phase] == "pending":
+                self.phase_status[skipped_phase] = "skipped"
+        self.failure = {"phase": phase_name, "reason": str(reason)}
+
+    def mark_complete(self) -> None:
+        for phase in IOAI_PIPELINE_PHASES:
+            self.mark_success(phase)
+
+    @property
+    def complete(self) -> bool:
+        return all(
+            self.phase_status[phase] == "success" for phase in IOAI_PIPELINE_PHASES
+        )
+
+    @property
+    def total(self) -> int:
+        phase_points = sum(
+            IOAI_PIPELINE_PHASE_SCORE
+            for phase in IOAI_PIPELINE_PHASES
+            if self.phase_status[phase] == "success"
+        )
+        return phase_points + (IOAI_PIPELINE_COMPLETION_BONUS if self.complete else 0)
+
+    def matrix_row(self) -> dict[str, Any]:
+        status = "success" if self.complete else "failed" if self.failure else "pending"
+        return {
+            "product": self.product_id,
+            **{
+                phase: (
+                    IOAI_PIPELINE_PHASE_SCORE
+                    if self.phase_status[phase] == "success"
+                    else 0
+                )
+                for phase in IOAI_PIPELINE_PHASES
+            },
+            "bonus": IOAI_PIPELINE_COMPLETION_BONUS if self.complete else 0,
+            "total": self.total,
+            "status": status,
+            "failure": None if self.failure is None else dict(self.failure),
+        }
+
+
+class IoaiPipelineScorecard:
+    """Five-point phase matrix and completion bonus for one pipeline episode."""
+
+    def __init__(self, work_order: Sequence[str]) -> None:
+        products = tuple(str(product_id) for product_id in work_order)
+        if not products or len(set(products)) != len(products):
+            raise ValueError("IOAI scorecard requires a non-empty unique work order.")
+        self.work_order = products
+        self._results: dict[str, _IoaiProductScore] = {}
+        self.reset()
+
+    def reset(self) -> None:
+        """Clear results for a new environment reset."""
+
+        self._results = {
+            product_id: _IoaiProductScore(product_id) for product_id in self.work_order
+        }
+
+    def mark_phase_success(self, product_id: str, phase: str) -> None:
+        self._result(product_id).mark_success(phase)
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/scene.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene/scene.py:27:IOAI_SIM_SCENE_FINAL_PATH = IOAI_ASSET_ROOT / "final" / "final.usda"
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/scene.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene/scene.py:35:IOAI_SIM_SCENE_TRAY_ASSET_NAME = "Tray01"
+grep: src/ioailab/utils/__pycache__/galbot_asset.cpython-312.pyc: binary file matches
+src/ioailab/utils/galbot_asset.py:247:    "tray_small": ("trays", "Tray01"),
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/scene.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene/scene.py:33:IOAI_SIM_SCENE_SHELF_ASSET_NAME = "Shelf5Tier02"
+grep: src/ioailab/utils/__pycache__/galbot_asset.cpython-312.pyc: binary file matches
+src/ioailab/utils/galbot_asset.py:243:    "ioai_shelf": ("shelves", "Shelf5Tier02"),
+src/ioailab/utils/galbot_asset.py:244:    "shelf": ("shelves", "Shelf5Tier02"),
+root@rm2148bpgrhcli6:/workspace/ioailab# 
