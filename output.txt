@@ -1,1 +1,262 @@
-sed -n '1,260p' examples/policy_baseline/04_eval_ioai_policy_pipeline.py
+oot@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,260p' examples/policy_baseline/04_eval_ioai_policy_pipeline.py
+"""Evaluate the explicit-layout IOAI multi-product policy baseline.
+
+Each non-cocoa product uses the root task's Pick→Nav→Place TaskFlow with Pick
+and Place policy overrides. Cocoa uses the same Pick phase only, then every
+product runs the task-local Return sequence before the next product starts.
+"""
+
+from __future__ import annotations
+
+import argparse
+from collections.abc import Sequence
+from functools import partial
+from typing import Any
+
+import torch
+
+from ioailab.agents import TaskFlowAgent, TaskFlowSpec
+from ioailab.envs import make_env
+from ioailab.tasks.ioai_sim_scene import GALBOT_G1_IOAI_SIM_SCENE_TASK_ID
+from ioailab.tasks.ioai_sim_scene.policy_pipeline import (
+    CachedPolicyAgent,
+    IoaiPipelineLimits,
+    IoaiPolicyPipelineAgent,
+    PolicyAgentCache,
+    PolicyManifest,
+    ScenarioMatchedNavAgent,
+    load_policy_manifest,
+)
+from ioailab.tasks.ioai_sim_scene.table_layout import load_ioai_table_layout
+from ioailab.utils.log_utils import configure, get_logger
+
+logger = get_logger(__name__)
+
+# Keep the preset visible beside ``phase_agents`` as in 07_compound_task.py.
+COMPOUND_AGENT_PRESET = "ioai_policy_baseline"
+
+
+def _all_done(value: bool | Sequence[bool]) -> bool:
+    if isinstance(value, bool):
+        return value
+    return all(bool(item) for item in value)
+
+
+def _step_ended(result: Any) -> bool:
+    if not isinstance(result, tuple) or len(result) != 5:
+        raise TypeError("Expected Gymnasium five-value step result.")
+    terminated, truncated = result[2], result[3]
+    return bool(
+        torch.any(torch.as_tensor(terminated) | torch.as_tensor(truncated)).item()
+    )
+
+
+def _control_period(env: Any) -> float:
+    """Return the simulated seconds advanced per ``env.step`` call."""
+
+    cfg = env.unwrapped.cfg
+    return float(cfg.sim.dt) * int(cfg.decimation)
+
+
+def _failure_record(
+    agent: IoaiPolicyPipelineAgent,
+    reason: str,
+    steps: int,
+) -> dict[str, Any]:
+    active = agent.active_steps
+    active_step = active[0] if active else "not_started"
+    return {"phase": active_step, "reason": str(reason), "steps": int(steps)}
+
+
+def evaluate_policy_pipeline(
+    env: Any,
+    agent: IoaiPolicyPipelineAgent,
+    *,
+    episodes: int,
+    max_steps: int,
+    seed: int = 0,
+) -> dict[str, Any]:
+    """Evaluate every work order even when an individual product fails."""
+
+    successes: list[bool] = []
+    episode_lengths: list[int] = []
+    failures: list[dict[str, Any] | None] = []
+    episode_product_failures: list[tuple[dict[str, str], ...]] = []
+    for episode_index in range(int(episodes)):
+        steps = 0
+        failure: dict[str, Any] | None = None
+        try:
+            episode_seed = int(seed) + episode_index
+            env.reset(seed=episode_seed)
+            agent.reset(env)
+            while steps < int(max_steps):
+                action = agent.act(env)
+                result = env.raw_env.step(action)
+                steps += 1
+                if _all_done(agent.done(env)):
+                    break
+                if _step_ended(result):
+                    failure = _failure_record(agent, "environment_terminated", steps)
+                    break
+            else:
+                failure = _failure_record(agent, "max_steps_exceeded", steps)
+        except Exception as exc:
+            failure = _failure_record(
+                agent,
+                f"{type(exc).__name__}: {exc}",
+                steps,
+            )
+
+        product_failures = tuple(dict(item) for item in agent.product_failures)
+        if failure is None and product_failures:
+            failure = {
+                "phase": "completed",
+                "reason": "product_failures",
+                "steps": int(steps),
+                "products": product_failures,
+            }
+        successes.append(failure is None)
+        episode_lengths.append(steps)
+        failures.append(failure)
+        episode_product_failures.append(product_failures)
+
+    success_count = sum(successes)
+    return {
+        "total_episodes": int(episodes),
+        "success_count": success_count,
+        "success_rate": success_count / float(int(episodes)),
+        "episode_lengths": tuple(episode_lengths),
+        "failures": tuple(failures),
+        "product_failures": tuple(episode_product_failures),
+        "work_order": agent.work_order,
+    }
+
+
+def _prefetch_next_pick_policy(
+    env: Any,
+    current_product: str,
+    next_product: str,
+    *,
+    manifest: PolicyManifest,
+    cache: PolicyAgentCache,
+) -> None:
+    """Overlap the next checkpoint load with the current Return navigation."""
+
+    bundle = manifest.require(next_product)
+    cache.prefetch(
+        next_product,
+        "pick",
+        bundle.pick_checkpoint,
+        release_key=(current_product, "pick"),
+        env_ids=tuple(range(int(env.num_envs))),
+    )
+
+
+def _prefetch_place_policy(
+    env: Any,
+    env_ids: Any,
+    *,
+    product_id: str,
+    manifest: PolicyManifest,
+    cache: PolicyAgentCache,
+) -> None:
+    """Overlap the current product Place load with its Nav phase."""
+
+    bundle = manifest.require(product_id)
+    if bundle.place_checkpoint is None:
+        raise ValueError(f"Policy bundle for {product_id} has no Place checkpoint.")
+    rows = (
+        tuple(range(int(env.num_envs)))
+        if env_ids is None
+        else tuple(int(env_id) for env_id in env_ids)
+    )
+    cache.prefetch(
+        product_id,
+        "place",
+        bundle.place_checkpoint,
+        release_key=(product_id, "pick"),
+        env_ids=rows,
+    )
+
+
+def _product_flow_agent(
+    env: Any,
+    product_id: str,
+    *,
+    manifest: PolicyManifest,
+    cache: PolicyAgentCache,
+) -> TaskFlowAgent:
+    """Build one exact-product flow from task metadata and YAML checkpoints."""
+
+    if COMPOUND_AGENT_PRESET != "ioai_policy_baseline":
+        raise ValueError(f"Unknown COMPOUND_AGENT_PRESET: {COMPOUND_AGENT_PRESET!r}")
+    bundle = manifest.require(product_id)
+    pick_policy = CachedPolicyAgent(
+        cache,
+        product_id=product_id,
+        phase="pick",
+        checkpoint=bundle.pick_checkpoint,
+    )
+    phase_agents = {"pick": pick_policy}
+    if product_id == "cocoa":
+        root_flow = env.unwrapped.cfg.task_flow
+        cocoa_flow = TaskFlowSpec(
+            phases=(root_flow.phase("pick"),),
+            final_phase="pick",
+            phase_state_getter=root_flow.phase_state_getter,
+        )
+        return TaskFlowAgent(cocoa_flow, agents=phase_agents, env=env)
+
+    if bundle.place_checkpoint is None:
+        raise ValueError(f"Policy bundle for {product_id} has no Place checkpoint.")
+    if not bundle.place_start_references:
+        raise ValueError(f"Policy bundle for {product_id} has no Place Scenarios.")
+    phase_agents["nav"] = ScenarioMatchedNavAgent(
+        product_id=product_id,
+        references=bundle.place_start_references,
+        prefetcher=partial(
+            _prefetch_place_policy,
+            product_id=product_id,
+            manifest=manifest,
+            cache=cache,
+        ),
+    )
+    phase_agents["place"] = CachedPolicyAgent(
+        cache,
+        product_id=product_id,
+        phase="place",
+        checkpoint=bundle.place_checkpoint,
+    )
+    return TaskFlowAgent.from_env(env, agents=phase_agents)
+
+
+def main(argv: list[str] | None = None) -> None:
+    """Run the configured multi-product baseline."""
+
+    configure()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--table-layout",
+        default="outputs/ioai_table_layout.yaml",
+        help="Explicit layout generated by examples/generate_ioai_table_layout.py.",
+    )
+    parser.add_argument(
+        "--policy-manifest",
+        default="outputs/ioai_policy_baseline.yaml",
+        help="Product-to-Pick/Place checkpoint mapping.",
+    )
+    parser.add_argument("--episodes", type=int, default=1)
+    parser.add_argument("--max-products", type=int, choices=range(1, 6), default=5)
+    parser.add_argument("--num-envs", type=int, default=1)
+    parser.add_argument("--max-steps", type=int, default=15000)
+    parser.add_argument("--policy-cache-size", type=int, default=2)
+    parser.add_argument("--pick-max-steps", type=int, default=1200)
+    parser.add_argument("--nav-max-steps", type=int, default=1200)
+    parser.add_argument("--place-max-steps", type=int, default=1200)
+    parser.add_argument("--drop-confirm-steps", type=int, default=20)
+    parser.add_argument("--delivery-stable-steps", type=int, default=10)
+    parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--headless", action="store_true")
+    args = parser.parse_args(argv)
+    if args.num_envs != 1:
+root@rm2148bpgrhcli6:/workspace/ioailab# 
