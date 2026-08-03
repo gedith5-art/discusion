@@ -114,4 +114,1028 @@ ordinary case: final_score = max(0, base_points - deductions) + time_bonus
 serious safety incident: final_score = 0
 Deductions enter the formula as a positive total. For example, one -3 penalty adds 3 to that total.
 
+
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_21_box.stl
+| | | | | | | | |--_sn_cocacola_prim_3_cyl.stl
+| | | | | | | | |--_sn_cocacola_prim_1_cyl.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_16_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_10_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_18_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_19_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_11_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_9_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_12_box.stl
+| | | | | | | | |--_sn_cocacola_prim_5_cyl.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_20_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_6_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_2_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_14_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_13_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_22_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--coacd
+| | | | | | | | |--coacd.json
+| | | | | | | |--primitive
+| | | | | | | | |--primitive.json
+| | | | | | | | |--convex_decomposition
+| | | | | | | | | |--convex_decomposition.stl
+| | | | | | | | |--mesh
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_3_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_4_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_24_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_5_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_17_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_23_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_7_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_2_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_15_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_4_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_1_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_8_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_21_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_3_cyl.stl
+| | | | | | | | | |--_sn_cocacola_prim_1_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_16_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_10_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_18_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_19_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_11_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_9_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_12_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_5_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_20_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_6_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_2_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_14_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_13_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_22_box.stl
+| | | | | | | | |--primfit_mesh
+| | | | | | | | | |--cocacola_collision_001.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_020.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_010.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_022.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_013.stl
+| | | | | | | | | |--cocacola_collision_000.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_018.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_016.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_007.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_011.stl
+| | | | | | | | | |--cocacola_collision_003.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_009.stl
+| | | | | | | | | |--cocacola_collision_002.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_015.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_021.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_003.stl
+| | | | | | | | | |--cocacola_collision_004.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_014.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_008.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_017.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_001.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_006.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_004.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_005.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_002.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_023.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_000.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_012.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_019.stl
+| | | | | | | | |--primitive.xml
+| | | | | | | |--pengzhuangti.blend
+| | | | | |--usd_layers
+| | | | | | |--collision_layer
+| | | | | | | |--manual_collision_layer.usda
+| | | | | | |--base_usd
+| | | | | | | |--shaders
+| | | | | | | | |--WA.mdl
+| | | | | | | | |--TPL.mdl
+| | | | | | | |--textures
+| | | | | | | | |--kekoukelehantangkele300ml_Basecolor.png
+| | | | | | | | |--kekoukelehantangkele300ml_Normal.png
+| | | | | | | |--base.usd
+| | | | | | |--articulation_layer
+| | | | | | |--phys_layer
+| | | | | | | |--massFirst_phys_layer.usda
+| | | | | |--thumbnail.png
+| | | | | |--simready.usda
+| | | | | |--vlm_annotation
+| | | | | | |--annotation.json
+| | | | |--art_source
+| | | | | |--manual_source
+| | | | | | |--measured.json
+| | | | | | |--collision
+| | | | | | | |--convex_decomposition
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--meshes
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_3_box.stl
+| | | | | | | | |--_sn_cocacola_prim_4_cyl.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_24_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_5_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_17_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_23_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_7_box.stl
+| | | | | | | | |--_sn_cocacola_prim_2_cyl.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_15_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_4_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_1_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_8_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_21_box.stl
+| | | | | | | | |--_sn_cocacola_prim_3_cyl.stl
+| | | | | | | | |--_sn_cocacola_prim_1_cyl.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_16_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_10_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_18_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_19_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_11_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_9_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_12_box.stl
+| | | | | | | | |--_sn_cocacola_prim_5_cyl.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_20_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_6_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_2_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_14_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_13_box.stl
+| | | | | | | | |--_sn_UnknowVisual_preset_6_horn_22_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--coacd
+| | | | | | | | |--coacd.json
+| | | | | | | |--primitive
+| | | | | | | | |--primitive.json
+| | | | | | | | |--convex_decomposition
+| | | | | | | | | |--convex_decomposition.stl
+| | | | | | | | |--mesh
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_3_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_4_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_24_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_5_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_17_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_23_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_7_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_2_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_15_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_4_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_1_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_8_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_21_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_3_cyl.stl
+| | | | | | | | | |--_sn_cocacola_prim_1_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_16_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_10_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_18_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_19_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_11_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_9_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_12_box.stl
+| | | | | | | | | |--_sn_cocacola_prim_5_cyl.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_20_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_6_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_2_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_14_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_13_box.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_22_box.stl
+| | | | | | | | |--primfit_mesh
+| | | | | | | | | |--cocacola_collision_001.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_020.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_010.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_022.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_013.stl
+| | | | | | | | | |--cocacola_collision_000.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_018.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_016.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_007.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_011.stl
+| | | | | | | | | |--cocacola_collision_003.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_009.stl
+| | | | | | | | | |--cocacola_collision_002.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_015.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_021.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_003.stl
+| | | | | | | | | |--cocacola_collision_004.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_014.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_008.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_017.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_001.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_006.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_004.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_005.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_002.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_023.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_000.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_012.stl
+| | | | | | | | | |--_sn_UnknowVisual_preset_6_horn_collision_019.stl
+| | | | | | | | |--primitive.xml
+| | | | | | | |--pengzhuangti.blend
+| | | | | |--shaders
+| | | | | | |--WA.mdl
+| | | | | | |--TPL.mdl
+| | | | | |--thumbnail.png
+| | | | | |--cocacola.blend
+| | | | | |--textures
+| | | | | | |--cocacola_Normal.png
+| | | | | | |--cocacola_Basecolor.png
+| | | | | |--cocacola.usd
+| | |--final
+| | | |--floor.usda
+| | | |--textures
+| | | | |--wall_south_long_4k_outer_z180.png
+| | | | |--wall_west_short_4k_outer_z180.png
+| | | | |--carpet_roughness.png
+| | | | |--wall_east_short_4k_outer_z180.png
+| | | | |--wall_north_long_4k.png
+| | | | |--wall_east_short_4k.png
+| | | | |--wall_north_long_4k_outer_z180.png
+| | | | |--carpet_normal_gl.png
+| | | | |--wall_south_long_4k.png
+| | | | |--carpet_ao.png
+| | | | |--carpet_basecolor.png
+| | | | |--wall_west_short_4k.png
+| | | |--final.usda
+| | |--trays
+| | | |--Tray01
+| | | | |--simready_asset
+| | | | | |--thumbnail.png
+| | | | | |--model
+| | | | | | |--obj
+| | | | | | | |--normalized.obj
+| | | | | | | |--normalized.mtl
+| | | | | | |--usd
+| | | | | | | |--usd_layers
+| | | | | | | | |--collision_layer
+| | | | | | | | | |--manual_collision_layer.usd
+| | | | | | | | |--phys_layer
+| | | | | | | | | |--massFirst_phys_layer.usd
+| | | | | | | |--base_usd
+| | | | | | | | |--textures
+| | | | | | | | | |--Wood052_1K-PNG_Roughness.png
+| | | | | | | | | |--Wood052_1K-PNG_Color.png
+| | | | | | | | | |--Wood052_1K-PNG_NormalGL.png
+| | | | | | | | |--base.usd
+| | | | | | | |--simready.usd
+| | | | | | |--hull
+| | | | | | | |--convex_hull.stl
+| | | | | | |--decomposition
+| | | | | | | |--convex_decomposition.stl
+| | | | | | |--mjcf
+| | | | | | | |--mjcf_simready.xml
+| | | | | | | |--mjcf_simready
+| | | | | | | | |--materials
+| | | | | | | | |--meshes
+| | | | | | | | | |--stl
+| | | | | | | | | | |--SM_sn_Tray01_prim_10_box.stl
+| | | | | | | | | | |--SM_sn_Tray01_prim_6_box.stl
+| | | | | | | | | | |--SM_sn_Tray01_prim_8_box.stl
+| | | | | | | | | | |--SM_sn_Tray01_prim_7_box.stl
+| | | | | | | | | | |--SM_sn_Tray01_prim_9_box.stl
+| | | | | | | | |--textures
+| | | | | |--config.json
+| | | | |--simready_source
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--Tray01.blend
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--Tray02.blend
+| | | | | | | |--Tray02.blend1
+| | | | | | | |--meshes
+| | | | | | | | |--sn_Tray01_prim_9_box.stl
+| | | | | | | | |--sn_Tray01_prim_10_box.stl
+| | | | | | | | |--sn_Tray01_prim_8_box.stl
+| | | | | | | | |--sn_Tray01_prim_6_box.stl
+| | | | | | | | |--sn_Tray01_prim_7_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--manual_collision_blender.json
+| | | | | | | |--Tray01.blend1
+| | | | | |--usd_layers
+| | | | | | |--collision_layer
+| | | | | | | |--manual_collision_layer.usda
+| | | | | | |--base_usd
+| | | | | | | |--textures
+| | | | | | | | |--Wood052_1K-PNG_Roughness.png
+| | | | | | | | |--Wood052_1K-PNG_Color.png
+| | | | | | | | |--Wood052_1K-PNG_NormalGL.png
+| | | | | | | |--base.usd
+| | | | | | |--articulation_layer
+| | | | | | |--phys_layer
+| | | | | | | |--massFirst_phys_layer.usda
+| | | | | |--thumbnail.png
+| | | | | |--simready.usda
+| | | | | |--vlm_annotation
+| | | | | | |--annotation.json
+| | | | |--art_source
+| | | | | |--Tray01.blend
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--Tray01.blend
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--Tray02.blend
+| | | | | | | |--Tray02.blend1
+| | | | | | | |--meshes
+| | | | | | | | |--sn_Tray01_prim_9_box.stl
+| | | | | | | | |--sn_Tray01_prim_10_box.stl
+| | | | | | | | |--sn_Tray01_prim_8_box.stl
+| | | | | | | | |--sn_Tray01_prim_6_box.stl
+| | | | | | | | |--sn_Tray01_prim_7_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--manual_collision_blender.json
+| | | | | | | |--Tray01.blend1
+| | | | | |--Tray01.usd
+| | | | | |--textures
+| | | | | | |--Wood052_1K-PNG_Roughness.png
+| | | | | | |--Wood052_1K-PNG_Color.png
+| | | | | | |--Wood052_1K-PNG_NormalGL.png
+| | | | | |--Tray01_thumbnail.png
+| | | |--Tray02
+| | | | |--simready_asset
+| | | | | |--thumbnail.png
+| | | | | |--model
+| | | | | | |--obj
+| | | | | | | |--normalized.obj
+| | | | | | | |--normalized.mtl
+| | | | | | |--usd
+| | | | | | | |--usd_layers
+| | | | | | | | |--collision_layer
+| | | | | | | | | |--manual_collision_layer.usd
+| | | | | | | | |--phys_layer
+| | | | | | | | | |--massFirst_phys_layer.usd
+| | | | | | | |--base_usd
+| | | | | | | | |--textures
+| | | | | | | | | |--MuWen_Roughness.png
+| | | | | | | | | |--MuWen_Normal.png
+| | | | | | | | | |--MuWen_Color.png
+| | | | | | | | |--base.usd
+| | | | | | | |--simready.usd
+| | | | | | |--hull
+| | | | | | | |--convex_hull.stl
+| | | | | | |--decomposition
+| | | | | | | |--convex_decomposition.stl
+| | | | | | |--mjcf
+| | | | | | | |--mjcf_simready.xml
+| | | | | | | |--mjcf_simready
+| | | | | | | | |--materials
+| | | | | | | | |--meshes
+| | | | | | | | | |--stl
+| | | | | | | | | | |--SM_sn_Tray02_prim_8_box.stl
+| | | | | | | | | | |--SM_sn_Tray02_prim_7_box.stl
+| | | | | | | | | | |--SM_sn_Tray02_prim_9_box.stl
+| | | | | | | | | | |--SM_sn_Tray02_prim_10_box.stl
+| | | | | | | | | | |--SM_sn_Tray02_prim_6_box.stl
+| | | | | | | | |--textures
+| | | | | |--config.json
+| | | | |--simready_source
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--Tray02.blend
+| | | | | | | |--Tray02.blend1
+| | | | | | | |--meshes
+| | | | | | | | |--sn_Tray02_prim_7_box.stl
+| | | | | | | | |--sn_Tray02_prim_10_box.stl
+| | | | | | | | |--sn_Tray02_prim_6_box.stl
+| | | | | | | | |--sn_Tray02_prim_9_box.stl
+| | | | | | | | |--sn_Tray02_prim_8_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--manual_collision_blender.json
+| | | | | |--usd_layers
+| | | | | | |--collision_layer
+| | | | | | | |--manual_collision_layer.usda
+| | | | | | |--base_usd
+| | | | | | | |--textures
+| | | | | | | | |--MuWen_Roughness.png
+| | | | | | | | |--MuWen_Normal.png
+| | | | | | | | |--MuWen_Color.png
+| | | | | | | |--base.usd
+| | | | | | |--articulation_layer
+| | | | | | |--phys_layer
+| | | | | | | |--massFirst_phys_layer.usda
+| | | | | |--thumbnail.png
+| | | | | |--simready.usda
+| | | | | |--vlm_annotation
+| | | | | | |--annotation.json
+| | | | |--art_source
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--Tray02.blend
+| | | | | | | |--Tray02.blend1
+| | | | | | | |--meshes
+| | | | | | | | |--sn_Tray02_prim_7_box.stl
+| | | | | | | | |--sn_Tray02_prim_10_box.stl
+| | | | | | | | |--sn_Tray02_prim_6_box.stl
+| | | | | | | | |--sn_Tray02_prim_9_box.stl
+| | | | | | | | |--sn_Tray02_prim_8_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--manual_collision_blender.json
+| | | | | |--Tray02.blend
+| | | | | |--textures
+| | | | | | |--WoodGrain_Color.png
+| | | | | | |--WoodGrain_Normal.png
+| | | | | | |--WoodGrain_Roughness.png
+| | | | | |--Tray02.usd
+| | | | | |--Tray02_thumbnail.png
+| | |--table
+| | | |--folding_table
+| | | | |--simready_asset
+| | | | | |--thumbnail.png
+| | | | | |--model
+| | | | | | |--obj
+| | | | | | | |--normalized.obj
+| | | | | | | |--normalized.mtl
+| | | | | | |--usd
+| | | | | | | |--usd_layers
+| | | | | | | | |--collision_layer
+| | | | | | | | | |--manual_collision_layer.usd
+| | | | | | | | |--phys_layer
+| | | | | | | | | |--massFirst_phys_layer.usd
+| | | | | | | |--base_usd
+| | | | | | | | |--textures
+| | | | | | | | | |--ZheDieZhuo_Metallic.png
+| | | | | | | | | |--ZheDieZhuo_Color.png
+| | | | | | | | | |--ZheDieZhuo_Roughness.png
+| | | | | | | | | |--ZheDieZhuo_Normal.png
+| | | | | | | | |--base.usd
+| | | | | | | |--simready.usd
+| | | | | | |--hull
+| | | | | | | |--convex_hull.stl
+| | | | | | |--decomposition
+| | | | | | | |--convex_decomposition.stl
+| | | | | | |--mjcf
+| | | | | | | |--mjcf_simready.xml
+| | | | | | | |--mjcf_simready
+| | | | | | | | |--meshes
+| | | | | | | | | |--stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_10_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_1_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_2_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_12_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_4_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_18_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_16_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_9_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_14_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_5_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_6_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_19_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_8_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_13_box.stl
+| | | | | | | | | | |--SM_sn_ZheDieZhuo01_prim_17_box.stl
+| | | | | |--config.json
+| | | | |--simready_source
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--meshes
+| | | | | | | | |--sn_ZheDieZhuo01_prim_18_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_1_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_8_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_5_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_2_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_13_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_4_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_9_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_12_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_17_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_16_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_10_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_6_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_19_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_14_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--ZheDieZhuo.blend1
+| | | | | | | |--ZheDieZhuo.blend
+| | | | | |--usd_layers
+| | | | | | |--collision_layer
+| | | | | | | |--manual_collision_layer.usda
+| | | | | | |--base_usd
+| | | | | | | |--textures
+| | | | | | | | |--ZheDieZhuo_Metallic.png
+| | | | | | | | |--ZheDieZhuo_Color.png
+| | | | | | | | |--ZheDieZhuo_Roughness.png
+| | | | | | | | |--ZheDieZhuo_Normal.png
+| | | | | | | |--base.usd
+| | | | | | |--phys_layer
+| | | | | | | |--massFirst_phys_layer.usda
+| | | | | |--thumbnail.png
+| | | | | |--simready.usda
+| | | | | |--vlm_annotation
+| | | | | | |--annotation.json
+| | | | |--art_source
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--meshes
+| | | | | | | | |--sn_ZheDieZhuo01_prim_18_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_1_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_8_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_5_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_2_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_13_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_4_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_9_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_12_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_17_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_16_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_10_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_6_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_19_box.stl
+| | | | | | | | |--sn_ZheDieZhuo01_prim_14_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--ZheDieZhuo.blend1
+| | | | | | | |--ZheDieZhuo.blend
+| | | | | |--ZheDieZhuo.usd
+| | | | | |--textures
+| | | | | | |--ZheDieZhuo_Metallic.png
+| | | | | | |--ZheDieZhuo_Color.png
+| | | | | | |--ZheDieZhuo_Roughness.png
+| | | | | | |--ZheDieZhuo_Normal.png
+| | | | | |--ZheDieZhuo_thumbnail.png
+| | | | | |--ZheDieZhuo.blend
+| | |--shelves
+| | | |--Shelf5Tier02
+| | | | |--simready_asset
+| | | | | |--thumbnail.png
+| | | | | |--model
+| | | | | | |--obj
+| | | | | | | |--normalized.obj
+| | | | | | | |--normalized.mtl
+| | | | | | |--usd
+| | | | | | | |--usd_layers
+| | | | | | | | |--collision_layer
+| | | | | | | | | |--manual_collision_layer.usd
+| | | | | | | | |--phys_layer
+| | | | | | | | | |--massFirst_phys_layer.usd
+| | | | | | | |--base_usd
+| | | | | | | | |--textures
+| | | | | | | | | |--huojia_Roughness.png
+| | | | | | | | | |--huojia_Normal.png
+| | | | | | | | | |--huojia_Metallic.png
+| | | | | | | | | |--huojia_Color.png
+| | | | | | | | |--base.usd
+| | | | | | | |--simready.usd
+| | | | | | |--hull
+| | | | | | | |--convex_hull.stl
+| | | | | | |--decomposition
+| | | | | | | |--convex_decomposition.stl
+| | | | | | |--mjcf
+| | | | | | | |--mjcf_simready.xml
+| | | | | | | |--mjcf_simready
+| | | | | | | | |--materials
+| | | | | | | | |--meshes
+| | | | | | | | | |--stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_37_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_3_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_12_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_29_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_5_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_7_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_27_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_19_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_22_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_9_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_10_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_23_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_8_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_20_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_33_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_40_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_14_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_1_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_13_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_30_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_21_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_18_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_34_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_25_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_28_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_4_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_15_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_24_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_17_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_26_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_6_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_16_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_11_box.stl
+| | | | | | | | | | |--SM_sn_Shelf6Tier01_prim_2_box.stl
+| | | | | | | | |--textures
+| | | | | |--config.json
+| | | | |--simready_source
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--meshes
+| | | | | | | | |--sn_Shelf6Tier01_prim_28_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_8_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_15_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_12_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_9_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_6_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_29_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_16_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_11_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_3_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_27_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_23_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_4_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_19_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_34_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_10_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_2_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_17_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_40_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_26_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_1_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_24_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_37_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_22_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_33_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_20_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_13_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_18_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_25_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_21_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_7_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_30_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_5_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_14_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--Shelf5Tier02.blend1
+| | | | | | | |--manual_collision_blender.json
+| | | | | | | |--Shelf5Tier02.blend
+| | | | | |--usd_layers
+| | | | | | |--collision_layer
+| | | | | | | |--manual_collision_layer.usda
+| | | | | | |--base_usd
+| | | | | | | |--textures
+| | | | | | | | |--huojia_Roughness.png
+| | | | | | | | |--huojia_Normal.png
+| | | | | | | | |--huojia_Metallic.png
+| | | | | | | | |--huojia_Color.png
+| | | | | | | |--base.usd
+| | | | | | |--articulation_layer
+| | | | | | |--phys_layer
+| | | | | | | |--massFirst_phys_layer.usda
+| | | | | |--thumbnail.png
+| | | | | |--simready.usda
+| | | | | |--vlm_annotation
+| | | | | | |--annotation.json
+| | | | |--art_source
+| | | | | |--manual_source
+| | | | | | |--collision
+| | | | | | | |--manual_collision.xml
+| | | | | | | |--meshes
+| | | | | | | | |--sn_Shelf6Tier01_prim_28_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_8_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_15_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_12_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_9_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_6_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_29_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_16_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_11_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_3_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_27_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_23_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_4_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_19_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_34_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_10_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_2_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_17_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_40_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_26_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_1_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_24_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_37_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_22_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_33_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_20_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_13_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_18_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_25_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_21_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_7_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_30_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_5_box.stl
+| | | | | | | | |--sn_Shelf6Tier01_prim_14_box.stl
+| | | | | | | |--manual_collision.json
+| | | | | | | |--Shelf5Tier02.blend1
+| | | | | | | |--manual_collision_blender.json
+| | | | | | | |--Shelf5Tier02.blend
+| | | | | |--Shelf5Tier02.usd
+| | | | | |--textures
+| | | | | | |--huojia_Roughness.png
+| | | | | | |--huojia_Normal.png
+| | | | | | |--huojia_Metallic.png
+| | | | | | |--huojia_Color.png
+| | | | | |--Shelf5Tier02_thumbnail.png
+| | | | | |--Shelf5Tier02.blend
+|--AGENTS.md
+|--playground
+| |--Datasets
+| | |--Datasets
+| | | |--default_dataset
+| | | | |--front_head_rgb_camera
+| | | | | |--labels
+| | | | | | |--test
+| | | | | | | |--0078.txt
+| | | | | | | |--0070.txt
+| | | | | | | |--0088.txt
+| | | | | | | |--0079.txt
+| | | | | | | |--0072.txt
+| | | | | | | |--0075.txt
+| | | | | | | |--0081.txt
+| | | | | | | |--0086.txt
+| | | | | | | |--0089.txt
+| | | | | | | |--0082.txt
+| | | | | | | |--0073.txt
+| | | | | | | |--0080.txt
+| | | | | | | |--0085.txt
+| | | | | | | |--0084.txt
+| | | | | | | |--0087.txt
+| | | | | | | |--0077.txt
+| | | | | | | |--0083.txt
+| | | | | | | |--0071.txt
+| | | | | | | |--0074.txt
+| | | | | | | |--0076.txt
+| | | | | | |--val
+| | | | | | | |--0091.txt
+| | | | | | | |--0093.txt
+| | | | | | | |--0098.txt
+| | | | | | | |--0097.txt
+| | | | | | | |--0090.txt
+| | | | | | | |--0092.txt
+| | | | | | | |--0094.txt
+| | | | | | | |--0096.txt
+| | | | | | | |--0099.txt
+| | | | | | | |--0095.txt
+| | | | | | |--train.cache
+| | | | | | |--train
+| | | | | | | |--0037.txt
+| | | | | | | |--0062.txt
+| | | | | | | |--0061.txt
+| | | | | | | |--0056.txt
+| | | | | | | |--0002.txt
+| | | | | | | |--0029.txt
+| | | | | | | |--0007.txt
+| | | | | | | |--0005.txt
+| | | | | | | |--0011.txt
+| | | | | | | |--0031.txt
+| | | | | | | |--0023.txt
+| | | | | | | |--0026.txt
+| | | | | | | |--0018.txt
+| | | | | | | |--0058.txt
+| | | | | | | |--0066.txt
+| | | | | | | |--0045.txt
+| | | | | | | |--0054.txt
+| | | | | | | |--0063.txt
+| | | | | | | |--0040.txt
+| | | | | | | |--0001.txt
+| | | | | | | |--0035.txt
+| | | | | | | |--0047.txt
+| | | | | | | |--0060.txt
+| | | | | | | |--0032.txt
+| | | | | | | |--0009.txt
+| | | | | | | |--0067.txt
+| | | | | | | |--0051.txt
+| | | | | | | |--0044.txt
+| | | | | | | |--0013.txt
+| | | | | | | |--0043.txt
+| | | | | | | |--0021.txt
+| | | | | | | |--0024.txt
+| | | | | | | |--0053.txt
+| | | | | | | |--0057.txt
+| | | | | | | |--0065.txt
+| | | | | | | |--0038.txt
+| | | | | | | |--0046.txt
+| | | | | | | |--0020.txt
+| | | | | | | |--0008.txt
+| | | | | | | |--0052.txt
+| | | | | | | |--0055.txt
+| | | | | | | |--0036.txt
+| | | | | | | |--0034.txt
+| | | | | | | |--0017.txt
+| | | | | | | |--0010.txt
+| | | | | | | |--0041.txt
+| | | | | | | |--0033.txt
+| | | | | | | |--0050.txt
+| | | | | | | |--0027.txt
+| | | | | | | |--0064.txt
+| | | | | | | |--0028.txt
+| | | | | | | |--0012.txt
+| | | | | | | |--0006.txt
+| | | | | | | |--0049.txt
+| | | | | | | |--0042.txt
+| | | | | | | |--0048.txt
+| | | | | | | |--0014.txt
+| | | | | | | |--0015.txt
+| | | | | | | |--0025.txt
+| | | | | | | |--0069.txt
+| | | | | | | |--0068.txt
+| | | | | | | |--0019.txt
+| | | | | | | |--0003.txt
+| | | | | | | |--0059.txt
+| | | | | | | |--0000.txt
+| | | | | | | |--0004.txt
+| | | | | | | |--0022.txt
+| | | | | | | |--0016.txt
+| | | | | | | |--0039.txt
+| | | | | | | |--0030.txt
+| | | | | | |--val.cache
+| | | | | |--data.yaml
+| | | | | |--classes.txt
+| | | | | |--yolo_seg.yaml
+| | | | | |--images
+| | | | | | |--test
+| | | | | | | |--0084.png
+| | | | | | | |--0087.png
+| | | | | | | |--0076.png
+| | | | | | | |--0074.png
+| | | | | | | |--0082.png
+| | | | | | | |--0078.png
+| | | | | | | |--0081.png
+| | | | | | | |--0073.png
+| | | | | | | |--0070.png
+| | | | | | | |--0079.png
+| | | | | | | |--0072.png
+| | | | | | | |--0077.png
+| | | | | | | |--0083.png
+| | | | | | | |--0080.png
+| | | | | | | |--0075.png
+| | | | | | | |--0088.png
+| | | | | | | |--0086.png
+| | | | | | | |--0085.png
+| | | | | | | |--0071.png
+| | | | | | | |--0089.png
+| | | | | | |--val
+| | | | | | | |--0098.png
+| | | | | | | |--0092.png
+| | | | | | | |--0099.png
+| | | | | | | |--0094.png
+| | | | | | | |--0096.png
+| | | | | | | |--0097.png
+| | | | | | | |--0091.png
+| | | | | | | |--0093.png
+| | | | | | | |--0095.png
+| | | | | | | |--0090.png
+| | | | | | |--train
+| | | | | | | |--0013.png
+| | | | | | | |--0038.png
+| | | | | | | |--0022.png
+| | | | | | | |--0025.png
+| | | | | | | |--0014.png
+| | | | | | | |--0028.png
+| | | | | | | |--0035.png
+| | | | | | | |--0050.png
+| | | | | | | |--0019.png
+| | | | | | | |--0049.png
+| | | | | | | |--0055.png
+| | | | | | | |--0043.png
+| | | | | | | |--0044.png
+| | | | | | | |--0011.png
+| | | | | | | |--0067.png
+| | | | | | | |--0010.png
+| | | | | | | |--0000.png
+| | | | | | | |--0001.png
+| | | | | | | |--0004.png
+| | | | | | | |--0007.png
+| | | | | | | |--0034.png
+| | | | | | | |--0005.png
+| | | | | | | |--0012.png
+| | | | | | | |--0054.png
+| | | | | | | |--0059.png
+| | | | | | | |--0039.png
+| | | | | | | |--0058.png
+| | | | | | | |--0061.png
+| | | | | | | |--0040.png
+| | | | | | | |--0008.png
+| | | | | | | |--0041.png
+| | | | | | | |--0024.png
+| | | | | | | |--0009.png
+| | | | | | | |--0060.png
+| | | | | | | |--0023.png
+| | | | | | | |--0045.png
+| | | | | | | |--0047.png
+| | | | | | | |--0062.png
+| | | | | | | |--0029.png
+| | | | | | | |--0048.png
+| | | | | | | |--0033.png
+| | | | | | | |--0046.png
+| | | | | | | |--0052.png
+| | | | | | | |--0042.png
+| | | | | | | |--0020.png
+| | | | | | | |--0065.png
+| | | | | | | |--0002.png
+| | | | | | | |--0064.png
+| | | | | | | |--0051.png
+| | | | | | | |--0030.png
+| | | | | | | |--0003.png
+| | | | | | | |--0031.png
+| | | | | | | |--0066.png
+| | | | | | | |--0036.png
+| | | | | | | |--0027.png
+| | | | | | | |--0032.png
+| | | | | | | |--0069.png
+| | | | | | | |--0018.png
+| | | | | | | |--0006.png
+| | | | | | | |--0063.png
+| | | | | | | |--0053.png
+| | | | | | | |--0026.png
+| | | | | | | |--0068.png
+| | | | | | | |--0037.png
+| | | | | | | |--0057.png
+| | | | | | | |--0021.png
+| | | | | | | |--0017.png
+| | | | | | | |--0016.png
+| | | | | | | |--0015.png
+| | | | | | | |--0056.png
+| | |--__MACOSX
+| | | |--Datasets
+| | | | |--default_dataset
+| | | | | |--front_head_rgb_camera
+| | | | | | |--labels
+| | | | | | | |--test
+| | | | | | | |--val
+| | | | | | | |--train
+| | | | | | |--images
+| | | | | | | |--test
+| | | | | | | |--val
+| | | | | | | |--train
+|--book.toml
+|--weights
+| |--2023-10-28-18-33-37
+| | |--model_best.pth
+| | |--config.yml
+| |--2024-01-11-20-02-45
+| | |--model_best.pth
+| | |--config.yml
+|--outputs
+| |--ioai_sim_scene_place
+| | |--water
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--pringles
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--pepsichips
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--gum
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--applejuice
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--beefnoodle
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--orangejuice
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--coffee
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | | |--inference.zip
+| | |--cocacola
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| |--ioai_sim_scene_pick
+| | |--gum
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| | |--cocacola
+| | | |--inference
+| | | | |--config.json
+| | | | |--model_inference.pth
+| | | | |--action_norm_params.json
+| |--ioai_policy_baseline.yaml
+| |--ioai_table_layout.yaml
+|--uv.lock
+
 Official scoring is based on the task performance observed when the organizers run the final submitted solution. Internal logs or structured JSON result files produced by an official baseline are useful for development, but they are not the official competition score.
