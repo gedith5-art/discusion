@@ -1,17 +1,17 @@
 python examples/policy_baseline/03_collect_ioai_sim_scene.py \
   --product pringles \
   --dataset-path data/pringles_pick.hdf5 \
-  --episodes 100 \
+  --episodes 5 \
   --headless
 python examples/policy_baseline/03_collect_ioai_sim_scene.py \
   --product orangejuice \
   --dataset-path data/orangejuice_pick.hdf5 \
-  --episodes 100 \
+  --episodes 10 \
   --headless
 
 
 python examples/policy_baseline/03_collect_ioai_sim_scene.py \
   --product cocoa \
   --dataset-path data/cocoa_pick.hdf5 \
-  --episodes 100 \
+  --episodes 10 \
   --headless
