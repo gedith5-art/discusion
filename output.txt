@@ -1,17 +1,6 @@
-python examples/train.py \
+2026-08-03T14:52:22Z [15,767ms] [Warning] [simulation_app.simulation_app] SimulationApp.close() was not called explicitly. Shutting down automatically
+root@rm2148bpgrhcli6:/workspace/ioailab# python examples/train.py \
   --dataset data/pringles_pick.hdf5 \
   --output outputs/ioai_sim_scene_pick/pringles
-
-python examples/train.py \
-  --dataset data/orangejuice_pick.hdf5 \
-  --output outputs/ioai_sim_scene_pick/orangejuice
-
-python examples/train.py \
-  --dataset data/cocoa_pick.hdf5 \
-  --output outputs/ioai_sim_scene_pick/cocoa
-
-python examples/policy_baseline/03_collect_ioai_sim_scene.py \
-  --product cocoa \
-  --dataset-path data/cocoa_pick.hdf5 \
-  --episodes 1 \
-  --headless
+/workspace/isaaclab/_isaac_sim/kit/python/bin/python3: can't open file '/workspace/ioailab/examples/train.py': [Errno 2] No such file or directory
+There was an error running python
