@@ -1,251 +1,507 @@
-root@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,250p' src/ioailabroot@rm2148bpgrhcli6:/workspace/ioailab# sed -n '1,250p' src/ioailab/tasks/ioai_sim_scene/policy_pipeline.py
-"""Policy routing and compound-agent helpers for the IOAI baseline."""
+root@rm2148bpgrhcli6:/workspace/ioailab# find src -iname "*inference*"
+root@rm2148bpgrhcli6:/workspace/ioailab# grep -R "model_inference" -n src
+grep: src/ioailab/agents/policy/backends/__pycache__/robomimic.cpython-312.pyc: binary file matches
+src/ioailab/agents/policy/backends/robomimic.py:112:_INFERENCE_CHECKPOINT_NAME = "model_inference.pth"
+root@rm2148bpgrhcli6:/workspace/ioailab# grep -R "cocacola" -n src examples
+grep: src/ioailab/tasks/ioai_sim_scene_place/config/g1/__pycache__/postures.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene_place/config/g1/postures.py:46:    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID["cocacola"]: (
+src/ioailab/tasks/ioai_sim_scene_place/config/g1/postures.py:127:    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID["cocacola"]: (
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/scene.cpython-312.pyc: binary file matches
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/table_layout.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene/scene.py:40:    "cocacola",
+src/ioailab/tasks/ioai_sim_scene/scene.py:51:    "cocacola": "cocacola",
+src/ioailab/tasks/ioai_sim_scene/scene.py:83:    "cocacola": (3, "right"),
+src/ioailab/tasks/ioai_sim_scene/scene.py:91:    for product_id in ("gum", "cocacola")
+src/ioailab/tasks/ioai_sim_scene/table_layout.py:36:            ("cocacola",),
+src/ioailab/tasks/ioai_sim_scene/table_layout.py:115:        IoaiTableLayout(products=("gum", "cocacola", b1_product, "cocoa", b2_product))
+root@rm2148bpgrhcli6:/workspace/ioailab# grep -R "gum" -n src examples
+grep: src/ioailab/tasks/ioai_sim_scene_place/config/g1/__pycache__/postures.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene_place/config/g1/postures.py:54:    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID["gum"]: (
+src/ioailab/tasks/ioai_sim_scene_place/config/g1/postures.py:136:    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID["gum"]: (
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/scene.cpython-312.pyc: binary file matches
+grep: src/ioailab/tasks/ioai_sim_scene/__pycache__/table_layout.cpython-312.pyc: binary file matches
+src/ioailab/tasks/ioai_sim_scene/scene.py:41:    "gum",
+src/ioailab/tasks/ioai_sim_scene/scene.py:55:    "gum": "gum",
+src/ioailab/tasks/ioai_sim_scene/scene.py:72:        if product_name == IOAI_SIM_SCENE_PICK_PRODUCT_ASSET_NAME_BY_ID["gum"]
+src/ioailab/tasks/ioai_sim_scene/scene.py:86:    "gum": (5, "left"),
+src/ioailab/tasks/ioai_sim_scene/scene.py:91:    for product_id in ("gum", "cocacola")
+src/ioailab/tasks/ioai_sim_scene/table_layout.py:35:            ("gum",),
+src/ioailab/tasks/ioai_sim_scene/table_layout.py:115:        IoaiTableLayout(products=("gum", "cocacola", b1_product, "cocoa", b2_product))
+grep: src/ioailab/agents/policy/backends/__pycache__/robomimic.cpython-312.pyc: binary file matches
+src/ioailab/agents/policy/backends/robomimic.py:333:    iterable as the first argument instead. ioailab keeps the newer
+src/ioailab/agents/teleop/devices/gp001.py:88:    1. explicit ``port`` argument or ``GALBOT_GP001_PORT``;
+grep: src/ioailab/datasets/__pycache__/refs.cpython-312.pyc: binary file matches
+src/ioailab/datasets/refs.py:417:        raise TypeError("mimic(dataset, ...) accepts only one dataset argument.")
+grep: src/ioailab/robots/g1/actions/__pycache__/dispatch.cpython-312.pyc: binary file matches
+src/ioailab/robots/g1/actions/dispatch.py:89:        **kwargs: Additional keyword arguments forwarded to the packer.
+grep: src/ioailab/randomizers/__pycache__/pose.cpython-312.pyc: binary file matches
+src/ioailab/randomizers/pose.py:65:                arguments are inconsistent.
+examples/05_custom_agent.py:35:    parser = argparse.ArgumentParser(
+examples/05_custom_agent.py:38:    parser.add_argument(
+examples/05_custom_agent.py:41:    parser.add_argument(
+examples/05_custom_agent.py:44:    parser.add_argument(
+examples/05_custom_agent.py:50:    parser.add_argument(
+examples/05_custom_agent.py:53:    parser.add_argument(
+examples/05_custom_agent.py:56:    parser.add_argument("--headless", action="store_true", help="Run without viewer.")
+examples/policy_baseline/03_collect_ioai_sim_scene.py:84:    parser = argparse.ArgumentParser(description=__doc__)
+examples/policy_baseline/03_collect_ioai_sim_scene.py:85:    parser.add_argument(
+examples/policy_baseline/03_collect_ioai_sim_scene.py:91:    parser.add_argument(
+examples/policy_baseline/03_collect_ioai_sim_scene.py:96:    parser.add_argument(
+examples/policy_baseline/03_collect_ioai_sim_scene.py:102:    scenario_output.add_argument(
+examples/policy_baseline/03_collect_ioai_sim_scene.py:110:    scenario_output.add_argument(
+examples/policy_baseline/03_collect_ioai_sim_scene.py:115:    parser.add_argument("--episodes", type=int, default=1)
+examples/policy_baseline/03_collect_ioai_sim_scene.py:116:    parser.add_argument(
+examples/policy_baseline/03_collect_ioai_sim_scene.py:125:    parser.add_argument("--num-envs", type=int, default=1)
+examples/policy_baseline/03_collect_ioai_sim_scene.py:126:    parser.add_argument("--max-steps", type=int, default=3000)
+examples/policy_baseline/03_collect_ioai_sim_scene.py:127:    parser.add_argument("--headless", action="store_true")
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:236:    parser = argparse.ArgumentParser(description=__doc__)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:237:    parser.add_argument(
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:242:    parser.add_argument(
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:247:    parser.add_argument("--episodes", type=int, default=1)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:248:    parser.add_argument("--max-products", type=int, choices=range(1, 6), default=5)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:249:    parser.add_argument("--num-envs", type=int, default=1)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:250:    parser.add_argument("--max-steps", type=int, default=15000)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:251:    parser.add_argument("--policy-cache-size", type=int, default=2)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:252:    parser.add_argument("--pick-max-steps", type=int, default=1200)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:253:    parser.add_argument("--nav-max-steps", type=int, default=1200)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:254:    parser.add_argument("--place-max-steps", type=int, default=1200)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:255:    parser.add_argument("--drop-confirm-steps", type=int, default=20)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:256:    parser.add_argument("--delivery-stable-steps", type=int, default=10)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:257:    parser.add_argument("--seed", type=int, default=0)
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:258:    parser.add_argument("--headless", action="store_true")
+examples/policy_baseline/04_eval_ioai_policy_pipeline.py:295:            "pick_product": "gum",
+examples/policy_baseline/README.md:75:The examples use `gum`. First collect Pick demonstrations:
+examples/policy_baseline/README.md:78:python examples/policy_baseline/01_collect_ioai_pick.py --product gum
+examples/policy_baseline/README.md:86:  --dataset-path data/ioai_sim_scene_pick/gum.hdf5 \
+examples/policy_baseline/README.md:87:  --output-dir outputs/ioai_sim_scene_pick/gum \
+examples/policy_baseline/README.md:96:  --product gum \
+examples/policy_baseline/README.md:101:`data/ioai_sim_scene_place/scenarios/gum.yaml`. To create a Scenario dataset,
+examples/policy_baseline/README.md:109:  --product gum \
+examples/policy_baseline/README.md:110:  --init-scenario data/ioai_sim_scene_place/scenarios/gum.yaml
+examples/policy_baseline/README.md:117:  --product gum \
+examples/policy_baseline/README.md:118:  --init-scenario data/ioai_sim_scene_place/scenarios/gum
+examples/policy_baseline/README.md:138:  gum:
+examples/policy_baseline/README.md:139:    pick_checkpoint: ioai_sim_scene_pick/gum/<run>/inference/model_inference.pth
+examples/policy_baseline/README.md:140:    place_checkpoint: ioai_sim_scene_place/gum/<run>/inference/model_inference.pth
+examples/policy_baseline/README.md:141:    place_start_scenario: ../data/ioai_sim_scene_place/scenarios/gum.yaml
+examples/policy_baseline/01_collect_ioai_pick.py:22:    parser = argparse.ArgumentParser(description=__doc__)
+examples/policy_baseline/01_collect_ioai_pick.py:23:    parser.add_argument(
+examples/policy_baseline/01_collect_ioai_pick.py:29:    parser.add_argument(
+examples/policy_baseline/01_collect_ioai_pick.py:38:    parser.add_argument(
+examples/policy_baseline/01_collect_ioai_pick.py:43:    parser.add_argument(
+examples/policy_baseline/01_collect_ioai_pick.py:48:    parser.add_argument(
+examples/policy_baseline/01_collect_ioai_pick.py:54:    parser.add_argument("--num-envs", type=int, default=1)
+examples/policy_baseline/01_collect_ioai_pick.py:55:    parser.add_argument("--max-steps", type=int, default=1000)
+examples/policy_baseline/01_collect_ioai_pick.py:56:    parser.add_argument(
+examples/policy_baseline/01_collect_ioai_pick.py:61:    parser.add_argument("--headless", action="store_true")
+examples/policy_baseline/02_collect_ioai_place.py:19:    parser = argparse.ArgumentParser(description=__doc__)
+examples/policy_baseline/02_collect_ioai_place.py:20:    parser.add_argument(
+examples/policy_baseline/02_collect_ioai_place.py:26:    parser.add_argument(
+examples/policy_baseline/02_collect_ioai_place.py:31:    parser.add_argument(
+examples/policy_baseline/02_collect_ioai_place.py:36:    parser.add_argument(
+examples/policy_baseline/02_collect_ioai_place.py:41:    parser.add_argument(
+examples/policy_baseline/02_collect_ioai_place.py:47:    parser.add_argument("--num-envs", type=int, default=32)
+examples/policy_baseline/02_collect_ioai_place.py:48:    parser.add_argument("--max-steps", type=int, default=1000)
+examples/policy_baseline/02_collect_ioai_place.py:49:    parser.add_argument("--headless", action="store_true")
+examples/04_eval.py:46:    parser = argparse.ArgumentParser(description=__doc__)
+examples/04_eval.py:47:    parser.add_argument(
+examples/04_eval.py:53:    parser.add_argument(
+examples/04_eval.py:56:    parser.add_argument("--checkpoint", required=True, help="Policy checkpoint path.")
+examples/04_eval.py:57:    parser.add_argument(
+examples/04_eval.py:66:    parser.add_argument(
+examples/04_eval.py:75:    parser.add_argument(
+examples/04_eval.py:84:    parser.add_argument(
+examples/04_eval.py:93:    parser.add_argument(
+examples/04_eval.py:96:    parser.add_argument(
+examples/04_eval.py:99:    parser.add_argument("--headless", action="store_true", help="Run without viewer.")
+examples/03_train.py:18:    parser = argparse.ArgumentParser(description=__doc__)
+examples/03_train.py:19:    parser.add_argument(
+examples/03_train.py:25:    parser.add_argument(
+examples/03_train.py:28:    parser.add_argument(
+examples/03_train.py:33:    parser.add_argument(
+examples/03_train.py:36:    parser.add_argument("--epochs", type=int, default=20, help="Training epochs.")
+examples/03_train.py:37:    parser.add_argument(
+examples/03_train.py:43:    parser.add_argument(
+examples/03_train.py:49:    parser.add_argument(
+examples/03_train.py:55:    parser.add_argument(
+examples/03_train.py:61:    parser.add_argument(
+examples/03_train.py:67:    parser.add_argument(
+examples/03_train.py:72:    parser.add_argument(
+examples/03_train.py:77:    parser.add_argument(
+examples/02_mimic.py:15:    parser = argparse.ArgumentParser(description=__doc__)
+examples/02_mimic.py:16:    parser.add_argument(
+examples/02_mimic.py:19:    parser.add_argument(
+examples/02_mimic.py:24:    parser.add_argument(
+examples/02_mimic.py:29:    parser.add_argument(
+examples/02_mimic.py:35:    parser.add_argument(
+examples/02_mimic.py:38:    parser.add_argument(
+examples/vision_baseline/04_fp_start_server.py:351:    """Parse CLI arguments."""
+examples/vision_baseline/04_fp_start_server.py:353:    parser = argparse.ArgumentParser(
+examples/vision_baseline/04_fp_start_server.py:357:    parser.add_argument(
+examples/vision_baseline/04_fp_start_server.py:365:    parser.add_argument(
+examples/vision_baseline/04_fp_start_server.py:373:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:82:            "pick_product": "gum",
+examples/vision_baseline/07_fp_eval_pick_all.py:329:    """Parse CLI arguments."""
+examples/vision_baseline/07_fp_eval_pick_all.py:331:    parser = argparse.ArgumentParser(
+examples/vision_baseline/07_fp_eval_pick_all.py:335:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:343:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:350:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:355:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:363:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:368:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:377:    parser.add_argument(
+examples/vision_baseline/07_fp_eval_pick_all.py:383:    parser.add_argument("--pick-max-steps", type=int, default=1200)
+examples/vision_baseline/07_fp_eval_pick_all.py:384:    parser.add_argument("--seed", type=int, default=0)
+examples/vision_baseline/07_fp_eval_pick_all.py:385:    parser.add_argument("--headless", action="store_true")
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:73:    """Parse command-line arguments and return a validated config."""
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:75:    parser = argparse.ArgumentParser(
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:79:    parser.add_argument(
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:83:    parser.add_argument(
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:91:    parser.add_argument(
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:97:    parser.add_argument(
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:103:    parser.add_argument(
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:109:    parser.add_argument(
+examples/vision_baseline/scripts/visualize_yolo_dataset.py:115:    parser.add_argument(
+examples/vision_baseline/03_predict_yolo.py:72:    """Parse CLI arguments."""
+examples/vision_baseline/03_predict_yolo.py:74:    parser = argparse.ArgumentParser(
+examples/vision_baseline/03_predict_yolo.py:78:    parser.add_argument(
+examples/vision_baseline/03_predict_yolo.py:86:    parser.add_argument(
+examples/vision_baseline/03_predict_yolo.py:94:    parser.add_argument(
+examples/vision_baseline/03_predict_yolo.py:99:    parser.add_argument(
+examples/vision_baseline/03_predict_yolo.py:107:    parser.add_argument(
+examples/vision_baseline/03_predict_yolo.py:113:    parser.add_argument("--exist-ok", action="store_true")
+examples/vision_baseline/06_fp_eval_subtask.py:97:    """Parse CLI arguments."""
+examples/vision_baseline/06_fp_eval_subtask.py:99:    parser = argparse.ArgumentParser(
+examples/vision_baseline/06_fp_eval_subtask.py:103:    parser.add_argument("--task", default=GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID)
+examples/vision_baseline/06_fp_eval_subtask.py:104:    parser.add_argument(
+examples/vision_baseline/06_fp_eval_subtask.py:110:    parser.add_argument(
+examples/vision_baseline/06_fp_eval_subtask.py:115:    parser.add_argument(
+examples/vision_baseline/06_fp_eval_subtask.py:123:    parser.add_argument(
+examples/vision_baseline/06_fp_eval_subtask.py:128:    parser.add_argument(
+examples/vision_baseline/06_fp_eval_subtask.py:137:    parser.add_argument(
+examples/vision_baseline/06_fp_eval_subtask.py:143:    parser.add_argument("--max-steps", type=int, default=1200)
+examples/vision_baseline/06_fp_eval_subtask.py:144:    parser.add_argument("--headless", action="store_true")
+examples/vision_baseline/01_generate_yolo_dataset.py:129:    """Parse CLI arguments into a validated config."""
+examples/vision_baseline/01_generate_yolo_dataset.py:131:    parser = argparse.ArgumentParser(
+examples/vision_baseline/01_generate_yolo_dataset.py:135:    parser.add_argument(
+examples/vision_baseline/01_generate_yolo_dataset.py:144:    parser.add_argument(
+examples/vision_baseline/01_generate_yolo_dataset.py:152:    parser.add_argument(
+examples/vision_baseline/01_generate_yolo_dataset.py:157:    parser.add_argument(
+examples/vision_baseline/01_generate_yolo_dataset.py:160:    parser.add_argument(
+examples/vision_baseline/01_generate_yolo_dataset.py:169:    parser.add_argument("--train-ratio", type=float, default=0.7)
+examples/vision_baseline/01_generate_yolo_dataset.py:170:    parser.add_argument("--test-ratio", type=float, default=0.2)
+examples/vision_baseline/01_generate_yolo_dataset.py:171:    parser.add_argument("--val-ratio", type=float, default=0.1)
+examples/vision_baseline/01_generate_yolo_dataset.py:172:    parser.add_argument(
+examples/vision_baseline/01_generate_yolo_dataset.py:178:    parser.add_argument("--headless", action="store_true", help="Run without viewer.")
+examples/vision_baseline/01_generate_yolo_dataset.py:179:    parser.add_argument(
+examples/vision_baseline/01_generate_yolo_dataset.py:191:    parser.add_argument(
+examples/vision_baseline/05_fp_pose_estimation.py:71:    """Parse CLI arguments."""
+examples/vision_baseline/05_fp_pose_estimation.py:73:    parser = argparse.ArgumentParser(
+examples/vision_baseline/05_fp_pose_estimation.py:77:    parser.add_argument("--task-id", default=GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID)
+examples/vision_baseline/05_fp_pose_estimation.py:78:    parser.add_argument(
+examples/vision_baseline/05_fp_pose_estimation.py:84:    parser.add_argument(
+examples/vision_baseline/05_fp_pose_estimation.py:87:    parser.add_argument("--camera", default=DEFAULT_CAMERA)
+examples/vision_baseline/05_fp_pose_estimation.py:88:    parser.add_argument("--bridge-dir", default=DEFAULT_BRIDGE_DIR)
+examples/vision_baseline/05_fp_pose_estimation.py:89:    parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT_S)
+examples/vision_baseline/05_fp_pose_estimation.py:90:    parser.add_argument(
+examples/vision_baseline/05_fp_pose_estimation.py:99:    parser.add_argument("--headless", action="store_true")
+examples/vision_baseline/02_train_yolo.py:76:    """Parse CLI arguments."""
+examples/vision_baseline/02_train_yolo.py:78:    parser = argparse.ArgumentParser(
+examples/vision_baseline/02_train_yolo.py:82:    parser.add_argument(
+examples/vision_baseline/02_train_yolo.py:90:    parser.add_argument(
+examples/vision_baseline/02_train_yolo.py:101:    parser.add_argument("--epochs", type=int, default=200)
+examples/vision_baseline/02_train_yolo.py:102:    parser.add_argument("--imgsz", type=int, default=320)
+examples/vision_baseline/02_train_yolo.py:103:    parser.add_argument(
+examples/vision_baseline/02_train_yolo.py:108:    parser.add_argument(
+examples/vision_baseline/02_train_yolo.py:117:    parser.add_argument("--exist-ok", action="store_true")
+examples/07_compound_task.py:22:    parser = argparse.ArgumentParser(description=__doc__)
+examples/07_compound_task.py:23:    parser.add_argument("--task", default=GALBOT_G1_PICK_TO_SHELF_TASK_ID)
+examples/07_compound_task.py:24:    parser.add_argument(
+examples/07_compound_task.py:30:    parser.add_argument(
+examples/07_compound_task.py:35:    parser.add_argument(
+examples/07_compound_task.py:41:    parser.add_argument("--num-envs", type=int, default=9)
+examples/07_compound_task.py:42:    parser.add_argument("--max-steps", type=int, default=1500)
+examples/07_compound_task.py:43:    parser.add_argument(
+examples/07_compound_task.py:48:    parser.add_argument("--headless", action="store_true")
+examples/generate_ioai_table_layout.py:16:    parser = argparse.ArgumentParser(description=__doc__)
+examples/generate_ioai_table_layout.py:17:    parser.add_argument(
+examples/generate_ioai_table_layout.py:22:    parser.add_argument(
+examples/01_collect.py:16:    parser = argparse.ArgumentParser(description=__doc__)
+examples/01_collect.py:17:    parser.add_argument(
+examples/01_collect.py:20:    parser.add_argument(
+examples/01_collect.py:25:    parser.add_argument(
+examples/01_collect.py:31:    parser.add_argument(
+examples/01_collect.py:34:    parser.add_argument(
+examples/01_collect.py:37:    parser.add_argument(
+examples/01_collect.py:42:    parser.add_argument(
+examples/01_collect.py:47:    parser.add_argument("--headless", action="store_true", help="Run without viewer.")
+examples/06_collect_component_task.py:31:    parser = argparse.ArgumentParser(description=__doc__)
+examples/06_collect_component_task.py:32:    parser.add_argument(
+examples/06_collect_component_task.py:37:    parser.add_argument(
+examples/06_collect_component_task.py:43:    parser.add_argument("--num-envs", type=int, default=1)
+examples/06_collect_component_task.py:44:    parser.add_argument("--max-steps", type=int, default=1000)
+examples/06_collect_component_task.py:45:    parser.add_argument(
+examples/06_collect_component_task.py:50:    parser.add_argument(
+examples/06_collect_component_task.py:55:    parser.add_argument(
+examples/06_collect_component_task.py:61:    parser.add_argument("--headless", action="store_true")
 
-from __future__ import annotations
 
-from collections import OrderedDict
-from collections.abc import Callable, Mapping, Sequence
-from concurrent.futures import Future, ThreadPoolExecutor
-from dataclasses import dataclass
-from functools import lru_cache
-import json
-from pathlib import Path
-from typing import Any
-
-import torch
-import yaml
-
-from ioailab.agents import (
-    BaseAgent,
-    PolicyAgent,
-    TrajectoryNavAgent,
-    agent_sequence,
-    agent_step,
-)
-from ioailab.agents.io import EnvIds
-from ioailab.robots.g1.spec import (
-    G1_LEFT_ARM_DOF_ORDER,
-    G1_LEFT_GRIPPER_DOF_ORDER,
-    G1_LEG_DOF_ORDER,
-    G1_RIGHT_ARM_DOF_ORDER,
-    G1_RIGHT_GRIPPER_DOF_ORDER,
-)
-from ioailab.robots.g1.profile import G1_PROFILE
-from ioailab.tasks.common.scenario import Scenario
-from ioailab.tasks.common.scenario_set import load_scenario_set
-from ioailab.tasks.ioai_sim_scene import (
-    GALBOT_G1_IOAI_SIM_SCENE_TASK_ID,
-    GALBOT_G1_IOAI_SIM_SCENE_PICK_TASK_ID,
-    GALBOT_G1_IOAI_SIM_SCENE_PLACE_TASK_ID,
-)
-from ioailab.tasks.ioai_sim_scene.arm_selection import select_shared_manipulation_arm
-from ioailab.tasks.ioai_sim_scene.runtime_state import (
-    IOAI_SIM_SCENE_PLACE_PHYSICAL_JOINT_NAMES,
-    IOAI_SIM_SCENE_POLICY_ALIGNED_JOINT_NAMES,
-    activate_pipeline_product,
-    place_physical_joint_targets,
-    read_table_layout,
-    place_policy_joint_references,
-    set_place_policy_joint_reference,
-    set_place_navigation_goal,
-    set_place_physical_joint_targets,
-)
-from ioailab.tasks.ioai_sim_scene.scene import (
-    IOAI_SIM_SCENE_PICK_PRODUCT_INDEX_BY_ID,
-    IOAI_SIM_SCENE_PRODUCT_SCENE_NAMES,
-)
-from ioailab.tasks.ioai_sim_scene.table_layout import (
-    IOAI_TABLE_LAYOUT_B1_PRODUCTS,
-    IOAI_TABLE_LAYOUT_B2_PRODUCTS,
-    IoaiTableLayout,
-)
-from ioailab.tasks.ioai_sim_scene_nav.agent import nav_agent, nav_sequence_agent
-from ioailab.tasks.ioai_sim_scene_pick.config.g1.postures import (
-    G1_IOAI_SIM_SCENE_ARM_CARRY_JOINT_POS_BY_ARM,
-    G1_IOAI_SIM_SCENE_LEFT_ARM_READY_JOINT_POS,
-    G1_IOAI_SIM_SCENE_LEG_INITIAL_JOINT_POS,
-    G1_IOAI_SIM_SCENE_PICK_BASE_ORIENTATION,
-    G1_IOAI_SIM_SCENE_PICK_BASE_POSITION,
-    G1_IOAI_SIM_SCENE_RIGHT_ARM_INITIAL_JOINT_POS,
-)
-from ioailab.tasks.ioai_sim_scene_pick.mdp.terminations import (
-    IOAI_SIM_SCENE_MAX_PRODUCT_GRIPPER_CENTER_DISTANCE_M,
-    IOAI_SIM_SCENE_PICK_CARRY_MAX_JOINT_ABS_ERROR,
-    IOAI_SIM_SCENE_PLACE_GRIPPER_OPEN_MAX_POSITION,
-)
-from ioailab.tasks.ioai_sim_scene_pick.runtime_state import (
-    selected_product_root_positions,
-)
-from ioailab.tasks.ioai_sim_scene_place.mdp.terminations import (
-    IOAI_SIM_SCENE_PLACE_UPRIGHT_MIN_DOT,
-    IOAI_SIM_SCENE_PLACE_XY_TOLERANCE,
-    IOAI_SIM_SCENE_PLACE_Z_TOLERANCE,
-)
-from ioailab.tasks.ioai_sim_scene_place.runtime_state import place_target_positions
-
-from ioailab.utils.log_utils import get_logger
-
-logger = get_logger(__name__)
-
-POLICY_MANIFEST_SCHEMA = "ioailabIoaiPolicyManifest-v0"
-B1_PRODUCT_IDS = IOAI_TABLE_LAYOUT_B1_PRODUCTS
-B2_PRODUCT_IDS = IOAI_TABLE_LAYOUT_B2_PRODUCTS
-MANIPULATION_ACTION_TERMS = (
-    "left_arm",
-    "left_gripper",
-    "right_arm",
-    "right_gripper",
-)
-RETURN_ACTION_TERMS = (
-    "legs",
-    "left_arm",
-    "left_gripper",
-    "right_arm",
-    "right_gripper",
-)
-IOAI_SIM_SCENE_GRASP_MATCH_JOINT_NAMES = (
-    *G1_LEFT_ARM_DOF_ORDER,
-    *G1_LEFT_GRIPPER_DOF_ORDER,
-    *G1_RIGHT_ARM_DOF_ORDER,
-    *G1_RIGHT_GRIPPER_DOF_ORDER,
-)
-
-IOAI_POLICY_RETURN_BASE_CONTROL_RADIUS = 0.003
-IOAI_POLICY_RETURN_BASE_SUCCESS_RADIUS = 0.008
-IOAI_POLICY_RETURN_BASE_MAX_LINEAR_SPEED = 0.02
-IOAI_POLICY_RETURN_BASE_MAX_ANGULAR_SPEED = 0.02
-IOAI_POLICY_RETURN_MAX_JOINT_ABS_ERROR = 0.05
-IOAI_POLICY_RETURN_SETTLE_MAX_JOINT_ABS_ERROR = 0.005
-IOAI_POLICY_RETURN_MAX_JOINT_SPEED = 0.05
-IOAI_POLICY_RETURN_SETTLE_MAX_JOINT_SPEED = 0.02
-IOAI_POLICY_RETURN_WAYPOINT_TOLERANCE = 0.05
-IOAI_POLICY_RETURN_YAW_CONTROL_TOLERANCE = 0.005
-IOAI_POLICY_RETURN_YAW_TOLERANCE = 0.01
-IOAI_POLICY_MANIPULATION_BASE_HOLD_RADIUS = 0.0005
-IOAI_POLICY_MANIPULATION_BASE_HOLD_YAW_TOLERANCE = 0.001
-IOAI_POLICY_MANIPULATION_BASE_HOLD_WAYPOINT_TOLERANCE = 0.01
-IOAI_POLICY_MANIPULATION_BASE_HOLD_POSITION_GAIN = 4.0
-IOAI_POLICY_MANIPULATION_BASE_HOLD_YAW_GAIN = 4.0
-
-
-IOAI_PIPELINE_PHASES = ("pick", "nav", "place")
-IOAI_PIPELINE_PHASE_SCORE = 5
-IOAI_PIPELINE_COMPLETION_BONUS = 5
-
-
-@dataclass(frozen=True, slots=True)
-class IoaiPipelineLimits:
-    """Bound one product attempt without terminating the whole work order."""
-
-    pick_max_steps: int = 1200
-    nav_max_steps: int = 1200
-    place_max_steps: int = 1200
-    drop_confirm_steps: int = 20
-    delivery_stable_steps: int = 10
-
-    def __post_init__(self) -> None:
-        values = {
-            "pick_max_steps": self.pick_max_steps,
-            "nav_max_steps": self.nav_max_steps,
-            "place_max_steps": self.place_max_steps,
-            "drop_confirm_steps": self.drop_confirm_steps,
-            "delivery_stable_steps": self.delivery_stable_steps,
-        }
-        invalid = tuple(name for name, value in values.items() if int(value) < 1)
-        if invalid:
-            raise ValueError(f"IOAI pipeline limits must be positive: {invalid}.")
-
-    def max_steps(self, phase: str) -> int:
-        """Return the configured budget for one canonical phase."""
-
-        phase_name = str(phase)
-        if phase_name not in IOAI_PIPELINE_PHASES:
-            raise ValueError(f"Unknown IOAI pipeline phase {phase_name!r}.")
-        return int(getattr(self, f"{phase_name}_max_steps"))
-
-
-class _IoaiProductScore:
-    """Mutable per-product score state owned by one episode scorecard."""
-
-    def __init__(self, product_id: str) -> None:
-        self.product_id = str(product_id)
-        self.phase_status = {phase: "pending" for phase in IOAI_PIPELINE_PHASES}
-        self.failure: dict[str, str] | None = None
-
-    def mark_success(self, phase: str) -> None:
-        phase_name = _validate_pipeline_phase(phase)
-        if self.phase_status[phase_name] in {"failed", "skipped"}:
-            raise RuntimeError(
-                f"Cannot mark {self.product_id}/{phase_name} successful after failure."
-            )
-        self.phase_status[phase_name] = "success"
-
-    def mark_failure(self, phase: str, reason: str) -> None:
-        phase_name = _validate_pipeline_phase(phase)
-        if self.failure is not None:
-            return
-        self.phase_status[phase_name] = "failed"
-        phase_index = IOAI_PIPELINE_PHASES.index(phase_name)
-        for skipped_phase in IOAI_PIPELINE_PHASES[phase_index + 1 :]:
-            if self.phase_status[skipped_phase] == "pending":
-                self.phase_status[skipped_phase] = "skipped"
-        self.failure = {"phase": phase_name, "reason": str(reason)}
-
-    def mark_complete(self) -> None:
-        for phase in IOAI_PIPELINE_PHASES:
-            self.mark_success(phase)
-
-    @property
-    def complete(self) -> bool:
-        return all(
-            self.phase_status[phase] == "success" for phase in IOAI_PIPELINE_PHASES
-        )
-
-    @property
-    def total(self) -> int:
-        phase_points = sum(
-            IOAI_PIPELINE_PHASE_SCORE
-            for phase in IOAI_PIPELINE_PHASES
-            if self.phase_status[phase] == "success"
-        )
-        return phase_points + (IOAI_PIPELINE_COMPLETION_BONUS if self.complete else 0)
-
-    def matrix_row(self) -> dict[str, Any]:
-        status = "success" if self.complete else "failed" if self.failure else "pending"
-        return {
-            "product": self.product_id,
-            **{
-                phase: (
-                    IOAI_PIPELINE_PHASE_SCORE
-                    if self.phase_status[phase] == "success"
-                    else 0
-                )
-                for phase in IOAI_PIPELINE_PHASES
-            },
-            "bonus": IOAI_PIPELINE_COMPLETION_BONUS if self.complete else 0,
-            "total": self.total,
-            "status": status,
-            "failure": None if self.failure is None else dict(self.failure),
-        }
-
-
-class IoaiPipelineScorecard:
-    """Five-point phase matrix and completion bonus for one pipeline episode."""
-
-    def __init__(self, work_order: Sequence[str]) -> None:
-        products = tuple(str(product_id) for product_id in work_order)
-        if not products or len(set(products)) != len(products):
-            raise ValueError("IOAI scorecard requires a non-empty unique work order.")
-        self.work_order = products
-        self._results: dict[str, _IoaiProductScore] = {}
-        self.reset()
-
-    def reset(self) -> None:
-        """Clear results for a new environment reset."""
-
-        self._results = {
-            product_id: _IoaiProductScore(product_id) for product_id in self.work_order
-        }
-
-    def mark_phase_success(self, product_id: str, phase: str) -> None:
-        self._result(product_id).mark_success(phase)
+root@rm2148bpgrhcli6:/workspace/ioailab# find assets -type d | grep -E "cocacola|gum|shelf|tray"
+assets/ioai_assets/objects/gum
+assets/ioai_assets/objects/gum/.git
+assets/ioai_assets/objects/gum/.git/gk
+assets/ioai_assets/objects/gum/.git/objects
+assets/ioai_assets/objects/gum/.git/objects/25
+assets/ioai_assets/objects/gum/.git/objects/e7
+assets/ioai_assets/objects/gum/.git/objects/26
+assets/ioai_assets/objects/gum/.git/objects/06
+assets/ioai_assets/objects/gum/.git/objects/2c
+assets/ioai_assets/objects/gum/.git/objects/29
+assets/ioai_assets/objects/gum/.git/objects/pack
+assets/ioai_assets/objects/gum/.git/objects/53
+assets/ioai_assets/objects/gum/.git/objects/info
+assets/ioai_assets/objects/gum/.git/objects/a1
+assets/ioai_assets/objects/gum/.git/objects/7b
+assets/ioai_assets/objects/gum/.git/refs
+assets/ioai_assets/objects/gum/.git/refs/heads
+assets/ioai_assets/objects/gum/.git/refs/tags
+assets/ioai_assets/objects/gum/.git/branches
+assets/ioai_assets/objects/gum/.git/logs
+assets/ioai_assets/objects/gum/.git/logs/refs
+assets/ioai_assets/objects/gum/.git/logs/refs/heads
+assets/ioai_assets/objects/gum/.git/info
+assets/ioai_assets/objects/gum/.git/hooks
+assets/ioai_assets/objects/gum/simready_asset
+assets/ioai_assets/objects/gum/simready_asset/model
+assets/ioai_assets/objects/gum/simready_asset/model/obj
+assets/ioai_assets/objects/gum/simready_asset/model/usd
+assets/ioai_assets/objects/gum/simready_asset/model/usd/usd_layers
+assets/ioai_assets/objects/gum/simready_asset/model/usd/usd_layers/collision_layer
+assets/ioai_assets/objects/gum/simready_asset/model/usd/usd_layers/phys_layer
+assets/ioai_assets/objects/gum/simready_asset/model/usd/base_usd
+assets/ioai_assets/objects/gum/simready_asset/model/usd/base_usd/shaders
+assets/ioai_assets/objects/gum/simready_asset/model/usd/base_usd/textures
+assets/ioai_assets/objects/gum/simready_asset/model/hull
+assets/ioai_assets/objects/gum/simready_asset/model/decomposition
+assets/ioai_assets/objects/gum/simready_asset/model/mjcf
+assets/ioai_assets/objects/gum/simready_asset/model/mjcf/mjcf_simready
+assets/ioai_assets/objects/gum/simready_asset/model/mjcf/mjcf_simready/materials
+assets/ioai_assets/objects/gum/simready_asset/model/mjcf/mjcf_simready/meshes
+assets/ioai_assets/objects/gum/simready_asset/model/mjcf/mjcf_simready/meshes/stl
+assets/ioai_assets/objects/gum/simready_asset/model/mjcf/mjcf_simready/textures
+assets/ioai_assets/objects/gum/simready_source
+assets/ioai_assets/objects/gum/simready_source/manual_source
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision/convex_decomposition
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision/meshes
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision/coacd
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision/primitive
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision/primitive/convex_decomposition
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision/primitive/mesh
+assets/ioai_assets/objects/gum/simready_source/manual_source/collision/primitive/primfit_mesh
+assets/ioai_assets/objects/gum/simready_source/usd_layers
+assets/ioai_assets/objects/gum/simready_source/usd_layers/collision_layer
+assets/ioai_assets/objects/gum/simready_source/usd_layers/base_usd
+assets/ioai_assets/objects/gum/simready_source/usd_layers/base_usd/shaders
+assets/ioai_assets/objects/gum/simready_source/usd_layers/base_usd/textures
+assets/ioai_assets/objects/gum/simready_source/usd_layers/articulation_layer
+assets/ioai_assets/objects/gum/simready_source/usd_layers/phys_layer
+assets/ioai_assets/objects/gum/simready_source/vlm_annotation
+assets/ioai_assets/objects/gum/art_source
+assets/ioai_assets/objects/gum/art_source/manual_source
+assets/ioai_assets/objects/gum/art_source/manual_source/collision
+assets/ioai_assets/objects/gum/art_source/manual_source/collision/convex_decomposition
+assets/ioai_assets/objects/gum/art_source/manual_source/collision/meshes
+assets/ioai_assets/objects/gum/art_source/manual_source/collision/coacd
+assets/ioai_assets/objects/gum/art_source/manual_source/collision/primitive
+assets/ioai_assets/objects/gum/art_source/manual_source/collision/primitive/convex_decomposition
+assets/ioai_assets/objects/gum/art_source/manual_source/collision/primitive/mesh
+assets/ioai_assets/objects/gum/art_source/manual_source/collision/primitive/primfit_mesh
+assets/ioai_assets/objects/gum/art_source/shaders
+assets/ioai_assets/objects/gum/art_source/textures
+assets/ioai_assets/objects/cocacola
+assets/ioai_assets/objects/cocacola/.git
+assets/ioai_assets/objects/cocacola/.git/gk
+assets/ioai_assets/objects/cocacola/.git/objects
+assets/ioai_assets/objects/cocacola/.git/objects/d1
+assets/ioai_assets/objects/cocacola/.git/objects/43
+assets/ioai_assets/objects/cocacola/.git/objects/09
+assets/ioai_assets/objects/cocacola/.git/objects/24
+assets/ioai_assets/objects/cocacola/.git/objects/f4
+assets/ioai_assets/objects/cocacola/.git/objects/pack
+assets/ioai_assets/objects/cocacola/.git/objects/info
+assets/ioai_assets/objects/cocacola/.git/objects/1b
+assets/ioai_assets/objects/cocacola/.git/objects/9a
+assets/ioai_assets/objects/cocacola/.git/objects/7b
+assets/ioai_assets/objects/cocacola/.git/objects/22
+assets/ioai_assets/objects/cocacola/.git/refs
+assets/ioai_assets/objects/cocacola/.git/refs/heads
+assets/ioai_assets/objects/cocacola/.git/refs/tags
+assets/ioai_assets/objects/cocacola/.git/branches
+assets/ioai_assets/objects/cocacola/.git/logs
+assets/ioai_assets/objects/cocacola/.git/logs/refs
+assets/ioai_assets/objects/cocacola/.git/logs/refs/heads
+assets/ioai_assets/objects/cocacola/.git/info
+assets/ioai_assets/objects/cocacola/.git/hooks
+assets/ioai_assets/objects/cocacola/simready_asset
+assets/ioai_assets/objects/cocacola/simready_asset/model
+assets/ioai_assets/objects/cocacola/simready_asset/model/obj
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/usd_layers
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/usd_layers/collision_layer
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/usd_layers/phys_layer
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/.thumbs
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/.thumbs/256x256
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/base_usd
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/base_usd/shaders
+assets/ioai_assets/objects/cocacola/simready_asset/model/usd/base_usd/textures
+assets/ioai_assets/objects/cocacola/simready_asset/model/hull
+assets/ioai_assets/objects/cocacola/simready_asset/model/decomposition
+assets/ioai_assets/objects/cocacola/simready_asset/model/mjcf
+assets/ioai_assets/objects/cocacola/simready_asset/model/mjcf/mjcf_simready
+assets/ioai_assets/objects/cocacola/simready_asset/model/mjcf/mjcf_simready/materials
+assets/ioai_assets/objects/cocacola/simready_asset/model/mjcf/mjcf_simready/meshes
+assets/ioai_assets/objects/cocacola/simready_asset/model/mjcf/mjcf_simready/meshes/stl
+assets/ioai_assets/objects/cocacola/simready_asset/model/mjcf/mjcf_simready/textures
+assets/ioai_assets/objects/cocacola/simready_source
+assets/ioai_assets/objects/cocacola/simready_source/manual_source
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision/convex_decomposition
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision/meshes
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision/coacd
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision/primitive
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision/primitive/convex_decomposition
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision/primitive/mesh
+assets/ioai_assets/objects/cocacola/simready_source/manual_source/collision/primitive/primfit_mesh
+assets/ioai_assets/objects/cocacola/simready_source/usd_layers
+assets/ioai_assets/objects/cocacola/simready_source/usd_layers/collision_layer
+assets/ioai_assets/objects/cocacola/simready_source/usd_layers/base_usd
+assets/ioai_assets/objects/cocacola/simready_source/usd_layers/base_usd/shaders
+assets/ioai_assets/objects/cocacola/simready_source/usd_layers/base_usd/textures
+assets/ioai_assets/objects/cocacola/simready_source/usd_layers/articulation_layer
+assets/ioai_assets/objects/cocacola/simready_source/usd_layers/phys_layer
+assets/ioai_assets/objects/cocacola/simready_source/vlm_annotation
+assets/ioai_assets/objects/cocacola/art_source
+assets/ioai_assets/objects/cocacola/art_source/manual_source
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision/convex_decomposition
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision/meshes
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision/coacd
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision/primitive
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision/primitive/convex_decomposition
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision/primitive/mesh
+assets/ioai_assets/objects/cocacola/art_source/manual_source/collision/primitive/primfit_mesh
+assets/ioai_assets/objects/cocacola/art_source/shaders
+assets/ioai_assets/objects/cocacola/art_source/textures
+assets/ioai_assets/trays
+assets/ioai_assets/trays/Tray01
+assets/ioai_assets/trays/Tray01/.git
+assets/ioai_assets/trays/Tray01/.git/objects
+assets/ioai_assets/trays/Tray01/.git/objects/49
+assets/ioai_assets/trays/Tray01/.git/objects/35
+assets/ioai_assets/trays/Tray01/.git/objects/6b
+assets/ioai_assets/trays/Tray01/.git/objects/38
+assets/ioai_assets/trays/Tray01/.git/objects/pack
+assets/ioai_assets/trays/Tray01/.git/objects/f0
+assets/ioai_assets/trays/Tray01/.git/objects/fd
+assets/ioai_assets/trays/Tray01/.git/objects/02
+assets/ioai_assets/trays/Tray01/.git/objects/info
+assets/ioai_assets/trays/Tray01/.git/objects/7b
+assets/ioai_assets/trays/Tray01/.git/refs
+assets/ioai_assets/trays/Tray01/.git/refs/heads
+assets/ioai_assets/trays/Tray01/.git/refs/tags
+assets/ioai_assets/trays/Tray01/.git/branches
+assets/ioai_assets/trays/Tray01/.git/logs
+assets/ioai_assets/trays/Tray01/.git/logs/refs
+assets/ioai_assets/trays/Tray01/.git/logs/refs/heads
+assets/ioai_assets/trays/Tray01/.git/info
+assets/ioai_assets/trays/Tray01/.git/hooks
+assets/ioai_assets/trays/Tray01/simready_asset
+assets/ioai_assets/trays/Tray01/simready_asset/model
+assets/ioai_assets/trays/Tray01/simready_asset/model/obj
+assets/ioai_assets/trays/Tray01/simready_asset/model/usd
+assets/ioai_assets/trays/Tray01/simready_asset/model/usd/usd_layers
+assets/ioai_assets/trays/Tray01/simready_asset/model/usd/usd_layers/collision_layer
+assets/ioai_assets/trays/Tray01/simready_asset/model/usd/usd_layers/phys_layer
+assets/ioai_assets/trays/Tray01/simready_asset/model/usd/base_usd
+assets/ioai_assets/trays/Tray01/simready_asset/model/usd/base_usd/textures
+assets/ioai_assets/trays/Tray01/simready_asset/model/hull
+assets/ioai_assets/trays/Tray01/simready_asset/model/decomposition
+assets/ioai_assets/trays/Tray01/simready_asset/model/mjcf
+assets/ioai_assets/trays/Tray01/simready_asset/model/mjcf/mjcf_simready
+assets/ioai_assets/trays/Tray01/simready_asset/model/mjcf/mjcf_simready/materials
+assets/ioai_assets/trays/Tray01/simready_asset/model/mjcf/mjcf_simready/meshes
+assets/ioai_assets/trays/Tray01/simready_asset/model/mjcf/mjcf_simready/meshes/stl
+assets/ioai_assets/trays/Tray01/simready_asset/model/mjcf/mjcf_simready/textures
+assets/ioai_assets/trays/Tray01/simready_source
+assets/ioai_assets/trays/Tray01/simready_source/manual_source
+assets/ioai_assets/trays/Tray01/simready_source/manual_source/collision
+assets/ioai_assets/trays/Tray01/simready_source/manual_source/collision/meshes
+assets/ioai_assets/trays/Tray01/simready_source/usd_layers
+assets/ioai_assets/trays/Tray01/simready_source/usd_layers/collision_layer
+assets/ioai_assets/trays/Tray01/simready_source/usd_layers/base_usd
+assets/ioai_assets/trays/Tray01/simready_source/usd_layers/base_usd/textures
+assets/ioai_assets/trays/Tray01/simready_source/usd_layers/articulation_layer
+assets/ioai_assets/trays/Tray01/simready_source/usd_layers/phys_layer
+assets/ioai_assets/trays/Tray01/simready_source/vlm_annotation
+assets/ioai_assets/trays/Tray01/art_source
+assets/ioai_assets/trays/Tray01/art_source/manual_source
+assets/ioai_assets/trays/Tray01/art_source/manual_source/collision
+assets/ioai_assets/trays/Tray01/art_source/manual_source/collision/meshes
+assets/ioai_assets/trays/Tray01/art_source/textures
+assets/ioai_assets/trays/Tray02
+assets/ioai_assets/trays/Tray02/.git
+assets/ioai_assets/trays/Tray02/.git/objects
+assets/ioai_assets/trays/Tray02/.git/objects/39
+assets/ioai_assets/trays/Tray02/.git/objects/90
+assets/ioai_assets/trays/Tray02/.git/objects/a6
+assets/ioai_assets/trays/Tray02/.git/objects/43
+assets/ioai_assets/trays/Tray02/.git/objects/1f
+assets/ioai_assets/trays/Tray02/.git/objects/7a
+assets/ioai_assets/trays/Tray02/.git/objects/88
+assets/ioai_assets/trays/Tray02/.git/objects/af
+assets/ioai_assets/trays/Tray02/.git/objects/pack
+assets/ioai_assets/trays/Tray02/.git/objects/info
+assets/ioai_assets/trays/Tray02/.git/objects/7b
+assets/ioai_assets/trays/Tray02/.git/refs
+assets/ioai_assets/trays/Tray02/.git/refs/heads
+assets/ioai_assets/trays/Tray02/.git/refs/tags
+assets/ioai_assets/trays/Tray02/.git/branches
+assets/ioai_assets/trays/Tray02/.git/logs
+assets/ioai_assets/trays/Tray02/.git/logs/refs
+assets/ioai_assets/trays/Tray02/.git/logs/refs/heads
+assets/ioai_assets/trays/Tray02/.git/info
+assets/ioai_assets/trays/Tray02/.git/hooks
+assets/ioai_assets/trays/Tray02/simready_asset
+assets/ioai_assets/trays/Tray02/simready_asset/model
+assets/ioai_assets/trays/Tray02/simready_asset/model/obj
+assets/ioai_assets/trays/Tray02/simready_asset/model/usd
+assets/ioai_assets/trays/Tray02/simready_asset/model/usd/usd_layers
+assets/ioai_assets/trays/Tray02/simready_asset/model/usd/usd_layers/collision_layer
+assets/ioai_assets/trays/Tray02/simready_asset/model/usd/usd_layers/phys_layer
+assets/ioai_assets/trays/Tray02/simready_asset/model/usd/base_usd
+assets/ioai_assets/trays/Tray02/simready_asset/model/usd/base_usd/textures
+assets/ioai_assets/trays/Tray02/simready_asset/model/hull
+assets/ioai_assets/trays/Tray02/simready_asset/model/decomposition
+assets/ioai_assets/trays/Tray02/simready_asset/model/mjcf
+assets/ioai_assets/trays/Tray02/simready_asset/model/mjcf/mjcf_simready
+assets/ioai_assets/trays/Tray02/simready_asset/model/mjcf/mjcf_simready/materials
+assets/ioai_assets/trays/Tray02/simready_asset/model/mjcf/mjcf_simready/meshes
+assets/ioai_assets/trays/Tray02/simready_asset/model/mjcf/mjcf_simready/meshes/stl
+assets/ioai_assets/trays/Tray02/simready_asset/model/mjcf/mjcf_simready/textures
+assets/ioai_assets/trays/Tray02/simready_source
+assets/ioai_assets/trays/Tray02/simready_source/manual_source
+assets/ioai_assets/trays/Tray02/simready_source/manual_source/collision
+assets/ioai_assets/trays/Tray02/simready_source/manual_source/collision/meshes
+assets/ioai_assets/trays/Tray02/simready_source/usd_layers
+assets/ioai_assets/trays/Tray02/simready_source/usd_layers/collision_layer
+assets/ioai_assets/trays/Tray02/simready_source/usd_layers/base_usd
+assets/ioai_assets/trays/Tray02/simready_source/usd_layers/base_usd/textures
+assets/ioai_assets/trays/Tray02/simready_source/usd_layers/articulation_layer
+assets/ioai_assets/trays/Tray02/simready_source/usd_layers/phys_layer
+assets/ioai_assets/trays/Tray02/simready_source/vlm_annotation
+assets/ioai_assets/trays/Tray02/art_source
+assets/ioai_assets/trays/Tray02/art_source/manual_source
+assets/ioai_assets/trays/Tray02/art_source/manual_source/collision
+assets/ioai_assets/trays/Tray02/art_source/manual_source/collision/meshes
+assets/ioai_assets/trays/Tray02/art_source/textures
